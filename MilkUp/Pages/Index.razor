@@ -1,0 +1,12 @@
+﻿@page "/"
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration configuration
+
+<h1>Hello, world!</h1>
+@configuration["ConfigMsg"]
+
+
+Welcome to your new app.
+<a href="/cows/1">Show cow with ID = 1</a>
+
+<SurveyPrompt Title="How is Blazor working for you?" />
