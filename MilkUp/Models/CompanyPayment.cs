@@ -5,9 +5,6 @@ namespace MilkUp.Models
 {
     public class CompanyPayment : EntityBase
     {
-        //todo in future - company payments for yours 'team'
-        public int ID { get; set; }
-
         public int CompanyID { get; set; }
         public Company Company {  get; set; }
 

@@ -15,7 +15,8 @@
 
   <ItemGroup>
     <Folder Include="Components\" />
-    <Folder Include="ViewModels\" />
+    <Folder Include="wwwroot\css\bootstrap\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>

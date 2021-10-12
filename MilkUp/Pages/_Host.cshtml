@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MilkUp</title>
     <base href="~/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet" />
 </head>
 <body>
@@ -32,5 +32,13 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+    @*nie działają tooltipy - ma być zainstalowana zewn biblioteka Popper => ale niby jest w bootsratp.bundle + musi być zainicjowana przed użyciem, to niby robi ten kod js - TOOLTIPY NIE DZIAŁAJĄ*@
+    <script src="js/bootstrap.bundle.min.js"></script>
+    @*<script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+	</script>*@
 </body>
 </html>

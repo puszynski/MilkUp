@@ -4,8 +4,6 @@ namespace MilkUp.Models
 {
     public class Lactation : EntityBase
     {
-        public int ID { get; set; }
-
         public int CowID { get; set; }
         public Cow Cow { get; set; }
 
