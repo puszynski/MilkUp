@@ -9,6 +9,8 @@ namespace MilkUp.ViewModels.Interfaces
         List<CowListViewModel> CowList {  get; set; }
         SelectedCowViewModel SelectedCowViewModel {  get; set; }
         AddCowFormViewModel AddCowFormViewModel {  get; set; }
+        public string SearchFilter { get; set; }
+
         Task InitializeNewCowForm();
         Task AddNewCow();
     }
