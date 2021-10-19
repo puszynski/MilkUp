@@ -3,7 +3,6 @@ using MilkUp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MilkUp.Data
 {
@@ -50,13 +49,13 @@ namespace MilkUp.Data
             var cowGroup2 = new CowGroup() { Name = "Grupa B - młode", DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
 
 
-            var cow1 = new Cow() { NameOnFarm = 2001, EarringNumber = 221, AllProID = 123, Farm = farm1, ParentCowID = null, IsMale = false, BirthDate = new DateTime(2020, 01, 27), Lactations = lactations, CowGroupID = 1, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
+            var cow1 = new Cow() { NameOnFarm = 2001, EarringNumber = 221, TransponderNumber = 123, Farm = farm1, ParentCowID = null, IsMale = false, BirthDate = new DateTime(2020, 01, 27), Lactations = lactations, CowGroupID = 1, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
 
             var bull = new Bull() { DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
 
-            var cow2 = new Cow() { NameOnFarm = 2002, EarringNumber = 222, AllProID = 124, Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = false, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
+            var cow2 = new Cow() { NameOnFarm = 2002, EarringNumber = 222, TransponderNumber = 124, Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = false, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
 
-            var cow3 = new Cow() { NameOnFarm = 2003, EarringNumber = 223, AllProID = 125, Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = true, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
+            var cow3 = new Cow() { NameOnFarm = 2003, EarringNumber = 223, TransponderNumber = 125, Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = true, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
         }
     }
 }

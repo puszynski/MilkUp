@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MilkUp.ViewModels
 {
-    public class CowsViewModel : ICowsViewModel/*, INotifyPropertyChanged*/
+    public class CowsViewModel : ICowsViewModel
     {
         public CowsViewModel()
         {
@@ -24,32 +24,9 @@ namespace MilkUp.ViewModels
             };
         }
 
-        //public event PropertyChangedEventHandler PropertyChanged;
-        //private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        //}
-
-        private List<CowListViewModel> _cowList = null;
-        public List<CowListViewModel> CowList
-        {
-            get => _cowList; 
-            set { _cowList = value; /*OnPropertyChanged();*/ }
-        }
-
-        private SelectedCowViewModel _selectedCowViewModel = null;
-        public SelectedCowViewModel SelectedCowViewModel 
-        {
-            get => _selectedCowViewModel;
-            set { _selectedCowViewModel = value; /*OnPropertyChanged();*/ }
-        }
-
-        private AddCowFormViewModel _addCowFormViewModel = null;
-        public AddCowFormViewModel AddCowFormViewModel
-        {
-            get => _addCowFormViewModel;
-            set {  _addCowFormViewModel = value; /*OnPropertyChanged();*/  }
-        }
+        public List<CowListViewModel> CowList { get; set; }
+        public SelectedCowViewModel SelectedCowViewModel { get; set; }        
+        public AddCowFormViewModel AddCowFormViewModel { get; set; }
 
         public async Task InitializeNewCowForm()
         {
@@ -57,17 +34,23 @@ namespace MilkUp.ViewModels
             AddCowFormViewModel = new AddCowFormViewModel() { IsFarmBorn = true };
         }
 
+        public async Task CancelAddCowForm()
+        {
+            await Task.Delay(0);//hack to "run async"
+            AddCowFormViewModel = null;
+        }
+
         public async Task AddNewCow()
         {
             await Task.Delay(0);
 
+            //todo walidacja parsowania
+
             //todo save to db
             CowList.Add(new CowListViewModel() 
             { 
-                ID = AddCowFormViewModel.ID,
-                NameOnFarm = AddCowFormViewModel.NameOnFarm,
-                FarmID = AddCowFormViewModel.FarmID,
-                IsFemale = AddCowFormViewModel.IsFemale,
+                NameOnFarm = AddCowFormViewModel.NameOnFarm.Value,
+                FarmID = int.Parse(AddCowFormViewModel.FarmID),
                 LactationCount = 0,
                 ParentID = AddCowFormViewModel.ParentID
             });
