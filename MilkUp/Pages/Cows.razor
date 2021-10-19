@@ -120,14 +120,16 @@
 </select>
 
 @if (SelectedCow != null)
-    {
+{
+    //todo - use "nav tabs to render sections" https://getbootstrap.com/docs/5.0/components/navs-tabs/#javascript-behavior
+
         <br />
         <div>
             Informacje szczegółowe:
             Oznaczenie na farmie: @SelectedCow.NameOnFarm
             Płeć: @(SelectedCow.IsMale ? "Samiec" : "Samica")
         </div>
-    }
+}
 
 
 @code {
