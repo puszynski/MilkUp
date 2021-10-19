@@ -42,7 +42,7 @@ namespace MilkUp
 
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();//single instance between all pages and users - only one instance on server            
-            services.AddScoped<ICowsViewModel, CowsViewModel>(); //AddScoped - one instance per user        
+            services.AddScoped<ICowsViewModel, CowsViewModel>(); //AddScoped - one instance per user
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline/ add middleweare - stuff between requests.

@@ -10,6 +10,7 @@ namespace MilkUp.ViewModels.Interfaces
         SelectedCowViewModel SelectedCowViewModel {  get; set; }
         AddCowFormViewModel AddCowFormViewModel {  get; set; }
         Task InitializeNewCowForm();
+        Task CancelAddCowForm();
         Task AddNewCow();
     }
 }
