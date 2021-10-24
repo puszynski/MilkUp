@@ -1,8 +1,9 @@
-using MilkUp.Data;
+﻿using MilkUp.Data;
 using MilkUp.Models;
 using MilkUp.Repositories;
 using MilkUp.ViewModels.Interfaces;
 using MilkUp.ViewModels.PartialViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,7 +48,8 @@ namespace MilkUp.ViewModels
         public List<CowListViewModel> CowList { get; set; }
         public SelectedCowViewModel SelectedCowViewModel { get; set; }        
         public AddCowFormViewModel AddCowFormViewModel { get; set; }
-
+        public Action StateHasChangedDelegate { get; set; }//delegate to hit StateHasChanged()
+        public string SearchFilter { get; set; }
         public async Task InitializeNewCowForm()
         {
             await Task.Delay(0);//hack to "run async"
@@ -80,6 +82,8 @@ namespace MilkUp.ViewModels
             _cowRepository.Save();
 
             AddCowFormViewModel = null;
+
+            //StateHasChanged(); //use https://itnext.io/mvvm-and-blazor-components-and-statehaschanged-a31be365638b Option 5: EventCallback (Use this one) to fire up StateHasChanged()
         }
     }
 }

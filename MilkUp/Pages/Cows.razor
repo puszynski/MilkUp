@@ -12,7 +12,7 @@
 @if (CowsVM.AddCowFormViewModel == null)
  {
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="button " class="btn btn-secondary btn-sm" @onclick="CowsVM.InitializeNewCowForm">Dodaj</button>
+        <button type="button" class="btn btn-secondary btn-sm" @onclick="CowsVM.InitializeNewCowForm">Dodaj</button>
     </div>
  }
 @if (CowsVM.AddCowFormViewModel != null)
@@ -72,13 +72,17 @@
  }
 @if (CowsVM.CowList != null)
 {
+    <p>Filter:</p>
+    <br/>
+    <input @bind="CowsVM.SearchFilter" @bind:event="oninput"/>
+
     <table class="table table-hover table-sm">
       <thead>
         <tr>
           <th scope = "col" >ID</th>
           <th scope="col">Liczba laktacji</th>
-          <th scope = "col" > ID zakładu </th>
-          <th scope="col">ID rodzica</th>
+          <th scope = "col" > ID farmy </th>
+          <th scope="col">ID matki</th>
         </tr>
       </thead>
       <tbody>
@@ -118,14 +122,16 @@
 </select>
 
 @if (SelectedCow != null)
-    {
+{
+    //todo - use "nav tabs to render sections" https://getbootstrap.com/docs/5.0/components/navs-tabs/#javascript-behavior
+
         <br />
         <div>
             Informacje szczegółowe:
             Oznaczenie na farmie: @SelectedCow.NameOnFarm
             Płeć: @(SelectedCow.IsMale ? "Samiec" : "Samica")
         </div>
-    }
+}
 
 
 @code {
