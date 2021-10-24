@@ -15,8 +15,12 @@ namespace MilkUp.Repositories
 
         Task<TEntity> GetByID(int id);
         Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null,
-                          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                          string includeProperties = "");  
+                                       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                       string includeProperties = "");
+
+        Task<IQueryable<TEntity>> GetQuery(Expression<Func<TEntity, bool>> filter = null,
+                                           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                           string includeProperties = "");
 
         Task<TEntity> Insert(TEntity entity);   
         Task<TEntity> Update(TEntity entity);

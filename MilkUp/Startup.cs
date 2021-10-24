@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MilkUp.Areas.Identity;
 using MilkUp.Data;
+using MilkUp.Models;
+using MilkUp.Repositories;
 using MilkUp.ViewModels;
 using MilkUp.ViewModels.Interfaces;
 
@@ -30,7 +32,7 @@ namespace MilkUp
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("LocalConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -40,9 +42,9 @@ namespace MilkUp
             //if you need y can expand maxiumum mesage send via signalR
             //services.AddServerSideBlazor().AddHubOptions(x => { x.MaximumReceiveMessageSize = 50000; })
 
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            services.AddSingleton<WeatherForecastService>();//single instance between all pages and users - only one instance on server            
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();         
             services.AddScoped<ICowsViewModel, CowsViewModel>(); //AddScoped - one instance per user
+            services.AddScoped<ICowRepository, CowRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline/ add middleweare - stuff between requests.

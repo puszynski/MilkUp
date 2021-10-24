@@ -49,7 +49,7 @@ namespace MilkUp.Repositories
             await Update(entityToDelete.Result);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, 
+        public async virtual Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, 
                                                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
                                                string includeProperties = "")
         {
@@ -75,6 +75,37 @@ namespace MilkUp.Repositories
             catch (Exception ex)
             {
                 var msg = ex.Message;   
+                return null;
+            }
+        }
+
+        //todo jak to uzyjesz to scal z tym wyzej jak sie da
+        public async virtual Task<IQueryable<TEntity>> GetQuery(Expression<Func<TEntity, bool>> filter = null,
+                                               Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                               string includeProperties = "")
+        {
+            try
+            {
+                IQueryable<TEntity> query = _dbSet.Where(x => !x.DateDeleted.HasValue);
+
+                if (filter != null)
+                    query = query.Where(filter);
+
+                foreach (var includedProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    query = query.Include(includedProperty);
+
+                if (orderBy != null)
+                {
+                    return orderBy(query);
+                }
+                else
+                {
+                    return query;
+                }
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
                 return null;
             }
         }
