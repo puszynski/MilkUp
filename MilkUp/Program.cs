@@ -1,15 +1,9 @@
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MilkUp.Data;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MilkUp
 {
@@ -19,7 +13,7 @@ namespace MilkUp
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            //CreateDbIfNotExists(host);
+            CreateDbIfNotExists(host);
             host.Run();
         }
 
