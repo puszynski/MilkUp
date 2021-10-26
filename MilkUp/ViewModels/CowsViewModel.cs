@@ -25,24 +25,15 @@ namespace MilkUp.ViewModels
             var cows = await _cowRepository.GetQuery();
 
             CowList = cows.Select(x => new CowListViewModel()
-            {
-                FarmID = x.FarmID,
-                ID = x.ID,
-                IsFemale = !x.IsMale,
-                LactationCount = x.Lactations.Count(),
-                NameOnFarm = x.NameOnFarm,
-                ParentID = x.ParentCowID
-            })
+                {
+                    FarmID = x.FarmID,
+                    ID = x.ID,
+                    IsFemale = !x.IsMale,
+                    LactationCount = x.Lactations.Count(),
+                    NameOnFarm = x.NameOnFarm,
+                    ParentID = x.ParentCowID
+                })
                 .ToList();
-
-            //await Task.Delay(0);
-
-            //CowList = new List<CowListViewModel>()
-            //{
-            //    new CowListViewModel(){ ID = 1, FarmID = 1, NameOnFarm = 203, IsFemale = true, LactationCount = 7 },
-            //    new CowListViewModel(){ ID = 2, FarmID = 1, NameOnFarm = 204, IsFemale = true, ParentID = 1, LactationCount = 0 },
-            //    new CowListViewModel(){ ID = 3, FarmID = 1, NameOnFarm = 205, IsFemale = true, ParentID = 1, LactationCount = 0}
-            //};
         }
 
         public List<CowListViewModel> CowList { get; set; }
