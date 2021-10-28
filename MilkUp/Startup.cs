@@ -34,7 +34,11 @@ namespace MilkUp
                 options.UseSqlServer(
                     Configuration.GetConnectionString("LocalConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => 
+                { 
+                    options.SignIn.RequireConfirmedAccount = true; 
+                    options.Password.RequireNonAlphanumeric = false; 
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddRazorPages();

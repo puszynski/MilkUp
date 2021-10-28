@@ -1,9 +1,13 @@
-﻿<h3>Panel zarządzania aplikacji</h3>
+﻿@page
+@attribute [Authorize(Roles = "superuser")]
+
+<h3>Panel zarządzania aplikacji</h3>
 <p>Z tego miejsca odbywać się będzie zarządzanie firmami, farmami, użytkownikami - tylko super user</p>
 
 <h3>Użytkownicy:</h3>
 
 <h3>Firmy i farmy:</h3>
+
 
 @code {
 
