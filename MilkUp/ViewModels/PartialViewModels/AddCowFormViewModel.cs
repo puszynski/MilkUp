@@ -14,7 +14,7 @@ namespace MilkUp.ViewModels.PartialViewModels
 
         [Required]
         public string FarmID { get; set; }//todo farm name to display/filter
-        public List<(string FarmID, string FarmName)> Farms { get; set; } = new List<(string FarmID, string FarmName)>() { ("1", "Gdańsk"), ("2", "Puszczykowo") };
+        
 
         #region out of farm
         //[Required] todo
