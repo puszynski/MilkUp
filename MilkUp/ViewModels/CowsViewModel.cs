@@ -1,4 +1,5 @@
-﻿using MilkUp.Models;
+﻿using Microsoft.AspNetCore.Components;
+using MilkUp.Models;
 using MilkUp.Repositories;
 using MilkUp.ViewModels.Interfaces;
 using MilkUp.ViewModels.PartialViewModels;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MilkUp.ViewModels
 {
-    public class CowsViewModel : ICowsViewModel
+    public class CowsViewModel : /*ComponentBase, */ICowsViewModel //todo spr czy można używć akcji z ComponenrBase
     {
         private readonly ICowRepository _cowRepository;
 
