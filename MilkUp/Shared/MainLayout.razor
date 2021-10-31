@@ -12,12 +12,30 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <NavMenuHorizontal />
                 </ul>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <LoginDisplay />
-                </ul>
                 <form>
                     <input class="form-control" type="text" placeholder="Search" aria-label="Search">
                 </form>
+                <div>
+                    <AuthorizeView>
+                        <Authorized>
+                            @*<a href="Identity/Account/Manage">Hello, @context.User.Identity.Name!</a>*@
+                            <form method="post" action="Identity/Account/LogOut">
+                                <button type="submit" style="background: none; padding:0px; border: none;">
+                                    <i class="bi bi-person-check-fill" style="font-size: 1.5rem; color: gray; margin: 1rem;" />
+                                </button>
+                            </form>
+                        </Authorized>
+                        <NotAuthorized>
+                            <a href="Identity/Account/Login">
+                                <i class="bi bi-person-x-fill" style="font-size: 1.5rem; color: darkred; margin: 1rem;" />
+                            </a>
+                            @*<a href="Identity/Account/Register">Register</a>*@
+                        </NotAuthorized>
+                    </AuthorizeView>
+
+                    
+                    
+                </div>
             </div>
         </div>
     </nav>
