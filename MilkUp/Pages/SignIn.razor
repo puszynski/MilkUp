@@ -1,49 +1,12 @@
 ﻿@layout EmptyLayout
-@page "/zaloguj"
-@page "/signin"
+@page "/zalogujV2"
+@page "/signinV2"
+@page "/loginV2"
 
-@*@inject ICowsViewModel CowsVM*@
+@inject ISignInViewModel SignInVM
+@*note: for that moment cant use _signInManager.PasswordSignInAsync using SignalR - use it when changed; The Blazor roadmap suggest this might be fixed in version 5.0.0, but for now you need to develop a solution based on the mixin. I have done this by using the scaffold and setting up navigation between Blazor components and Identity scaffolded items (SignIn and Signout processes). It works great and is the optimal solution for now. *@
 
-<style>
-    html,
-    body {
-        height: 100%;
-    }
-
-    body {
-        align-items: center;
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-    }
-
-    .form-signin {
-        width: 100%;
-        max-width: 330px;
-        padding: 15px;
-        margin: auto;
-    }
-
-        .form-signin .checkbox {
-            font-weight: 400;
-        }
-
-        .form-signin .form-floating:focus-within {
-            z-index: 2;
-        }
-
-        .form-signin input[type="email"] {
-            margin-bottom: -1px;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-
-        .form-signin input[type="password"] {
-            margin-bottom: 10px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-</style>
+<link href="css/login.css" rel="stylesheet" />
 
 <div class="text-center">
     <main class="form-signin">
@@ -70,6 +33,31 @@
         </form>
     </main>
 </div>
+
+<h1>JP TEST</h1>
+
+<EditForm Model="@SignInVM.Input" OnValidSubmit="@SignInVM.SignIn">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-floating">
+        <InputText type="email" class="form-control" placeholder="hack" @bind-Value="SignInVM.Input.Email" />
+        <label>Email lub login</label>
+    </div>
+
+    <div class="form-floating">
+        <InputText type="password" class="form-control" placeholder="hack" @bind-Value="SignInVM.Input.Password" />
+        <label>Hasło</label>
+    </div>
+
+    <div class="form-check form-switch">
+        <InputCheckbox class="form-check-input" id="flexSwitchCheckChecked" @bind-Value="SignInVM.Input.RememberMe" />
+        <label class="form-check-label" for="flexSwitchCheckChecked">Zapamiętaj mnie</label>
+    </div>
+
+    <button type="submit" class="btn btn-secondary btn-sm">Zaloguj</button>
+</EditForm>
+
 
 @code {
 
