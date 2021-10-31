@@ -1,14 +1,68 @@
 ﻿@page "/superadminpanel"
-@attribute [Authorize(Roles = "superuser")]
+@attribute [Authorize(Roles = "SuperUser")]
+@using Models
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> _userManager
+@inject RoleManager<IdentityRole> _roleManager
+@inject AuthenticationStateProvider _authenticationStateProvider
 
 <h3>Panel zarządzania aplikacji</h3>
 <p>Z tego miejsca odbywać się będzie zarządzanie firmami, farmami, użytkownikami - tylko super user</p>
 
+<h3>Role użytkowników</h3>
+<p>todo lista - pobierz po kliknięciu "Wyświetl"</p>
+<p>dodaj/usuń role - tylko z perspektywy zmian w kodzie, żeby były spójne z enumem EAspNetRole</p>
+@*<button @onclick="@InitNewRoleAndAssignLoggedUser">Jednorazowo! Utwórz role SuperUsera i przypisz do niej zalogowanego usera</button>*@
+
+
 <h3>Użytkownicy:</h3>
 
+<h4>Dodaj nowego</h4>
+<button @onclick="@AddNewUser">Dodaj Usera</button>
+
 <h3>Firmy i farmy:</h3>
+<p1>todo add new company</p1>
+<p2>todo add new farm</p2>
 
 
 @code {
+    class UserVM
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public int CompanyID { get; set; }
+    }
 
+    async Task AddNewUser()
+    {
+        var user = new ApplicationUser();
+        user.Email = "test@email.com";
+        user.CompanyID = 1;
+
+        user.EmailConfirmed = true;
+        user.ConcurrencyStamp = Guid.NewGuid().ToString();
+        var result = await _userManager.CreateAsync(user, "PASSWORD");
+
+        if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.Regular));
+        }
+    }
+
+    async Task InitNewRoleAndAssignLoggedUser()
+    {
+        var role = new IdentityRole();
+        role.Name = nameof(EAspNetRole.SuperUser);
+        role.NormalizedName = nameof(EAspNetRole.SuperUser).ToUpper();
+        role.ConcurrencyStamp = Guid.NewGuid().ToString();
+
+        var result = await _roleManager.CreateAsync(role);
+
+        if (result.Succeeded)
+        {
+            var state = _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = await _userManager.GetUserAsync(state.Result.User);
+            var result2 = await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.SuperUser));
+        }
+    }
 }

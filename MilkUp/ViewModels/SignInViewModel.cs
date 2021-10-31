@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MilkUp.Models;
 using MilkUp.ViewModels.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,13 @@ namespace MilkUp.ViewModels
 
     public class SignInViewModel : ISignInViewModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ILogger<ApplicationUser> _logger;
 
-        public SignInViewModel(SignInManager<IdentityUser> signInManager,
-            ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+        public SignInViewModel(SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            ILogger<ApplicationUser> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;

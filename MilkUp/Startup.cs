@@ -34,11 +34,12 @@ namespace MilkUp
                 options.UseSqlServer(
                     Configuration.GetConnectionString("LocalConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => 
+            services.AddDefaultIdentity<ApplicationUser>(options => 
                 { 
                     options.SignIn.RequireConfirmedAccount = true; 
                     options.Password.RequireNonAlphanumeric = false; 
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddRazorPages();
@@ -46,7 +47,7 @@ namespace MilkUp
             //if you need y can expand maxiumum mesage send via signalR
             //services.AddServerSideBlazor().AddHubOptions(x => { x.MaximumReceiveMessageSize = 50000; })
 
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();         
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();         
             services.AddScoped<ICowsViewModel, CowsViewModel>(); //AddScoped - one instance per user
             services.AddScoped<ICowRepository, CowRepository>();
             services.AddScoped<ISignInViewModel, SignInViewModel>();
