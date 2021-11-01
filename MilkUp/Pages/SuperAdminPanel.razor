@@ -1,68 +1,99 @@
 ﻿@page "/superadminpanel"
 @attribute [Authorize(Roles = "SuperUser")]
+
 @using Models
 @using Microsoft.AspNetCore.Identity;
+
 @inject UserManager<ApplicationUser> _userManager
 @inject RoleManager<IdentityRole> _roleManager
 @inject AuthenticationStateProvider _authenticationStateProvider
+@inject ISuperAdminPanelViewModel _superAdminPanelViewModel
 
-<h3>Panel zarządzania aplikacji</h3>
+<h1>Panel zarządzania aplikacji</h1>
 <p>Z tego miejsca odbywać się będzie zarządzanie firmami, farmami, użytkownikami - tylko super user</p>
 
-<h3>Role użytkowników</h3>
-<p>todo lista - pobierz po kliknięciu "Wyświetl"</p>
-<p>dodaj/usuń role - tylko z perspektywy zmian w kodzie, żeby były spójne z enumem EAspNetRole</p>
-@*<button @onclick="@InitNewRoleAndAssignLoggedUser">Jednorazowo! Utwórz role SuperUsera i przypisz do niej zalogowanego usera</button>*@
+<hr />
+<h2>Role użytkowników</h2>
+<p>Todo - lista?</p>
+<p>dodaj nową role - UWAGA! W celu dodania nowej roli nanieś zmiany w kodzie (tj. dodaj nowy enum EAspNetRole i użyj go w metodzie)</p>
+<button @onclick="@_superAdminPanelViewModel.CreateNewRole">Dodaj role. Uwaga! Potrzbe zmiany w kodzie</button>
+<button @onclick="@_superAdminPanelViewModel.InitNewRoleAndAssignLoggedUser">Jednorazowo! Utwórz role SuperUsera i przypisz do niej zalogowanego usera</button>
 
 
-<h3>Użytkownicy:</h3>
+<hr />
+<h2>Użytkownicy:</h2>
+@if (_superAdminPanelViewModel.UsersViewModels != null)
+{
+    <table class="table table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">user ID</th>
+                <th scope="col">email</th>
+                <th scope="col">company ID</th>
+                <th scope="col">roles IDs</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userViewModel in _superAdminPanelViewModel.UsersViewModels)
+            {
+                <tr class="bg-hover-white-smoke w-100 pointer">
+                    <th scope="row"> @userViewModel.UserID </th>
+                    <td> @userViewModel.Email </td>
+                    <td> @userViewModel.CompanyID </td>
+                    <td> @userViewModel.Roles </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-<h4>Dodaj nowego</h4>
-<button @onclick="@AddNewUser">Dodaj Usera</button>
 
-<h3>Firmy i farmy:</h3>
+@if (_superAdminPanelViewModel.AddUserViewModel == null)
+{
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="button" class="btn btn-secondary btn-sm" @onclick="_superAdminPanelViewModel.InitializeAddUser">Dodaj</button>
+    </div>
+}
+@if (_superAdminPanelViewModel.AddUserViewModel != null)
+{
+    <div class="alert alert-secondary mt-4" role="alert">
+        <h4>Dodaj nowego użytkownika</h4>
+        <EditForm Model="@_superAdminPanelViewModel.AddUserViewModel" OnValidSubmit="@_superAdminPanelViewModel.AddNewUser">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-floating">
+                <InputText type="email" class="form-control" placeholder="hack" @bind-Value="_superAdminPanelViewModel.AddUserViewModel.Email" />
+                <label>Email(login)</label>
+            </div>
+
+            <div class="form-floating">
+                <InputText type="password" class="form-control" placeholder="hack" @bind-Value="_superAdminPanelViewModel.AddUserViewModel.Password" />
+                <label>Hasło</label>
+            </div>
+
+            <div class="form-floating">
+                <InputSelect class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind-Value="_superAdminPanelViewModel.AddUserViewModel.CompanyID">
+                    <option value="">Wybierz firme</option>
+                    @foreach (var company in _superAdminPanelViewModel.Companies)
+                        {
+                        <option value="@company.ID">@company.Name</option>
+                        }
+                </InputSelect>
+                <label for="floatingSelect">Firma</label>
+            </div>
+
+            <button type="submit" class="btn btn-secondary btn-sm">Dodaj</button>
+            <button class="btn btn-secondary btn-sm" @onclick="_superAdminPanelViewModel.CancelAddUser">Anuluj</button>
+        </EditForm>
+    </div>
+}
+
+<hr />
+<h2>Firmy i farmy:</h2>
 <p1>todo add new company</p1>
 <p2>todo add new farm</p2>
 
 
 @code {
-    class UserVM
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public int CompanyID { get; set; }
-    }
-
-    async Task AddNewUser()
-    {
-        var user = new ApplicationUser();
-        user.Email = "test@email.com";
-        user.CompanyID = 1;
-
-        user.EmailConfirmed = true;
-        user.ConcurrencyStamp = Guid.NewGuid().ToString();
-        var result = await _userManager.CreateAsync(user, "PASSWORD");
-
-        if (result.Succeeded)
-        {
-            await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.Regular));
-        }
-    }
-
-    async Task InitNewRoleAndAssignLoggedUser()
-    {
-        var role = new IdentityRole();
-        role.Name = nameof(EAspNetRole.SuperUser);
-        role.NormalizedName = nameof(EAspNetRole.SuperUser).ToUpper();
-        role.ConcurrencyStamp = Guid.NewGuid().ToString();
-
-        var result = await _roleManager.CreateAsync(role);
-
-        if (result.Succeeded)
-        {
-            var state = _authenticationStateProvider.GetAuthenticationStateAsync();
-            var user = await _userManager.GetUserAsync(state.Result.User);
-            var result2 = await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.SuperUser));
-        }
-    }
 }

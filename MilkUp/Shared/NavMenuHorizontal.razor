@@ -1,16 +1,27 @@
-﻿<li class="nav-item px-1">
-    <NavLink class="nav-link" href="superadminpanel">
-        <i class="bi bi-eyeglasses"></i> SAP
-    </NavLink>
-</li>
+﻿<AuthorizeView Roles="SuperUser">
+    <li class="nav-item px-1">
+        <NavLink class="nav-link" href="superadminpanel">
+            <i class="bi bi-eyeglasses"></i> SAP
+        </NavLink>
+    </li>
+</AuthorizeView>
+<AuthorizeView Roles="SuperUser, Admin">
+    <li class="nav-item px-1">
+        <NavLink class="nav-link" href="adminpanel">
+            <i class="bi bi-person-badge-fill"></i> AdminPanel
+        </NavLink>
+    </li>
+</AuthorizeView>
+
+
 <li class="nav-item px-1">
     <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-        <i class="bi bi-eye-fill"></i> Home
+        <i class="bi bi-eye-fill"></i> Główna
     </NavLink>
 </li>
 <li class="nav-item px-1">
     <NavLink class="nav-link" href="cows">
-        <i class="bi bi-stack"></i> Cows
+        <i class="bi bi-stack"></i> Krowy
     </NavLink>
 </li>
 <li class="nav-item">    
@@ -21,12 +32,12 @@
     <ul class="dropdown-menu" aria-labelledby="dropdown09">
         <li>
             <NavLink class="dropdown-item" href="counter">
-                Counter
+                Test1
             </NavLink>
         </li>
         <li>
             <NavLink class="dropdown-item" href="fetchdata">
-                Fetch data
+                Test2
             </NavLink>
         </li>
     </ul>

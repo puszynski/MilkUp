@@ -1,4 +1,5 @@
-﻿using MilkUp.Enums;
+﻿using Microsoft.AspNetCore.Identity;
+using MilkUp.Enums;
 using MilkUp.Models;
 using System;
 using System.Collections.Generic;
@@ -75,6 +76,16 @@ namespace MilkUp.Data
             context.Cows.Add(cow1);
             context.Cows.Add(cow2);
             context.Cows.Add(cow3);
+
+            var role1 = new IdentityRole() { Name = "Admin", NormalizedName = "ADMIN", ConcurrencyStamp = "49932ed9-9a0a-4ed9-8a63-f0d99b410059" };
+            var role2 = new IdentityRole() { Name = "SuperUser", NormalizedName = "SUPERUSER", ConcurrencyStamp = "081709ef-0af9-4301-b4ce-fbf039b92d33" };
+            var role3 = new IdentityRole() { Name = "Regular", NormalizedName = "REGULAR", ConcurrencyStamp = "0ab1e61f-3617-4313-82af-1cd23760ceb1" };
+            context.Add(role1);
+            context.Add(role2);
+            context.Add(role3);
+
+            var superUser = new ApplicationUser() { UserName = "puszynski@gmail.com", NormalizedUserName = "PUSZYNSKI@GMAIL.COM", Email = "puszynski@gmail.com", NormalizedEmail = "PUSZYNSKI@GMAIL.COM", EmailConfirmed = true, PasswordHash = "AQAAAAEAACcQAAAAEIZg7ZVp5HeYTYH7jxHf/lV3rjBTIuwlO15U7bTL4qIQt93u0uKXmxz2CQ3c+bJESA==", SecurityStamp = "POFF4BUQ4AB625RRCA7Q5G5WIHCZLRAF", ConcurrencyStamp = "6511aabf-0527-4d9b-9e4e-658b99463f20", LockoutEnabled = true };
+            context.Add(superUser);
 
             context.SaveChanges();
         }

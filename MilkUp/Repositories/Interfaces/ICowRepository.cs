@@ -1,6 +1,6 @@
 ﻿using MilkUp.Models;
 
-namespace MilkUp.Repositories
+namespace MilkUp.Repositories.Interfaces
 {
     public interface ICowRepository : IRepository<Cow>
     {

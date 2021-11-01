@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace MilkUp.ViewModels.PartialViewModels
+namespace MilkUp.ViewModels.Cows
 {
     public class AddCowFormViewModel
     {

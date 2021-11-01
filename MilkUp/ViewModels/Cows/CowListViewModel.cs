@@ -1,4 +1,4 @@
-﻿namespace MilkUp.ViewModels
+﻿namespace MilkUp.ViewModels.Cows
 {
     public class CowListViewModel
     {

@@ -1,4 +1,4 @@
-﻿using MilkUp.ViewModels.PartialViewModels;
+﻿using MilkUp.ViewModels.Cows;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -10,6 +10,7 @@ using MilkUp.Areas.Identity;
 using MilkUp.Data;
 using MilkUp.Models;
 using MilkUp.Repositories;
+using MilkUp.Repositories.Interfaces;
 using MilkUp.ViewModels;
 using MilkUp.ViewModels.Interfaces;
 
@@ -36,8 +37,12 @@ namespace MilkUp
 
             services.AddDefaultIdentity<ApplicationUser>(options => 
                 { 
-                    options.SignIn.RequireConfirmedAccount = true; 
-                    options.Password.RequireNonAlphanumeric = false; 
+                    options.SignIn.RequireConfirmedAccount = false; 
+
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireDigit = false;
+                    options.User.RequireUniqueEmail = true;
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -49,8 +54,12 @@ namespace MilkUp
 
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();         
             services.AddScoped<ICowsViewModel, CowsViewModel>(); //AddScoped - one instance per user
-            services.AddScoped<ICowRepository, CowRepository>();
+            services.AddScoped<ISuperAdminPanelViewModel, SuperAdminPanelViewModel>();
             services.AddScoped<ISignInViewModel, SignInViewModel>();
+            services.AddScoped<IAdminPanelViewModel, AdminPanelViewModel>();
+
+            services.AddScoped<ICowRepository, CowRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline/ add middleweare - stuff between requests.

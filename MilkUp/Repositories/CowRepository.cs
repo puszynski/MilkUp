@@ -1,5 +1,6 @@
 ﻿using MilkUp.Data;
 using MilkUp.Models;
+using MilkUp.Repositories.Interfaces;
 
 namespace MilkUp.Repositories
 {

@@ -2,15 +2,16 @@
 using MilkUp.Models;
 using MilkUp.Repositories;
 using MilkUp.ViewModels.Interfaces;
-using MilkUp.ViewModels.PartialViewModels;
+using MilkUp.ViewModels.Cows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MilkUp.Repositories.Interfaces;
 
 namespace MilkUp.ViewModels
 {
-    public class CowsViewModel : /*ComponentBase, */ICowsViewModel //todo spr czy można używć akcji z ComponenrBase
+    public class CowsViewModel : ICowsViewModel
     {
         private readonly ICowRepository _cowRepository;
 
@@ -36,7 +37,6 @@ namespace MilkUp.ViewModels
                 .ToList();
 
             //todo if SelectedCowID from view[parameter] is not null, init SelectedCowViewModel
-
         }
 
         public List<CowListViewModel> CowList { get; set; }

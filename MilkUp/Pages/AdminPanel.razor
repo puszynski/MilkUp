@@ -1,14 +1,37 @@
 ﻿@page "/adminpanel"
-@attribute [Authorize(Roles = "admin, superuser")]
+@attribute [Authorize(Roles = "Admin, SuperUser")]
+@inject IAdminPanelViewModel _adminPanelViewModel
 
-<h3>Panel zarządzania</h3>
+<h1>Panel zarządzania</h1>
 <p>Z tego miejsca odbywać się będzie zarządzanie użytkownikami w obrębie firmy jeśli masz role administratora</p>
 
-<h3>Użytkownicy:</h3>
+<h2>Użytkownicy:</h2>
+@if (_adminPanelViewModel.UsersViewModels != null)
+{
+    <table class="table table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">user ID</th>
+                <th scope="col">email</th>
+                <th scope="col">roles IDs</th>
+                <th scope="col">farma</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userViewModel in _adminPanelViewModel.UsersViewModels)
+            {
+                <tr class="bg-hover-white-smoke w-100 pointer">
+                    <th scope="row"> @userViewModel.UserID </th>
+                    <td> @userViewModel.Email </td>
+                    <td> @userViewModel.Roles </td>
+                    <td> todo </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-<h3>Farmy:</h3>
-
-
+<h2>Farmy:</h2>
 
 @code {
 
