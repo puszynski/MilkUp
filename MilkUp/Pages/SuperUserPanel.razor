@@ -1,4 +1,4 @@
-﻿@page "/superadminpanel"
+﻿@page "/superuserpanel"
 @attribute [Authorize(Roles = "SuperUser")]
 
 @using Models
@@ -7,7 +7,7 @@
 @inject UserManager<ApplicationUser> _userManager
 @inject RoleManager<IdentityRole> _roleManager
 @inject AuthenticationStateProvider _authenticationStateProvider
-@inject ISuperAdminPanelViewModel _superAdminPanelViewModel
+@inject ISuperUserPanelViewModel _superAdminPanelViewModel
 
 <h1>Panel zarządzania aplikacji</h1>
 <p>Z tego miejsca odbywać się będzie zarządzanie firmami, farmami, użytkownikami - tylko super user</p>

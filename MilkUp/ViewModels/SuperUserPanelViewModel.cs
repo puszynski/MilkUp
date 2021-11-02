@@ -6,7 +6,7 @@ using MilkUp.Models;
 using MilkUp.Repositories;
 using MilkUp.Repositories.Interfaces;
 using MilkUp.ViewModels.Interfaces;
-using MilkUp.ViewModels.SuperAdminPanel;
+using MilkUp.ViewModels.SuperUserPanel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace MilkUp.ViewModels
 {
-    public class SuperAdminPanelViewModel : ISuperAdminPanelViewModel
+    public class SuperUserPanelViewModel : ISuperUserPanelViewModel
     {
         readonly UserManager<ApplicationUser> _userManager;
         readonly RoleManager<IdentityRole> _roleManager;
@@ -22,7 +22,7 @@ namespace MilkUp.ViewModels
         readonly ApplicationDbContext _applicationDbContext;
         readonly ICompanyRepository _companyRepository;
 
-        public SuperAdminPanelViewModel(UserManager<ApplicationUser> userManager,
+        public SuperUserPanelViewModel(UserManager<ApplicationUser> userManager,
                                         RoleManager<IdentityRole> roleManager,
                                         AuthenticationStateProvider authenticationStateProvider,
                                         ApplicationDbContext applicationDbContext,
@@ -37,19 +37,23 @@ namespace MilkUp.ViewModels
             InitializeViewModel().GetAwaiter().GetResult();
         }
 
-        public List<UsersViewModel> UsersViewModels { get; set; }
-        public AddUserViewModel AddUserViewModel { get; set; }
-        public List<(string ID, string Name)> Companies { get; set; }
+        public List<UserViewModel> UsersViewModels { get; set; }
 
         public async Task InitializeViewModel()
         {
-            UsersViewModels = _applicationDbContext.Users.Select(x => new UsersViewModel() { Email = x.Email, UserID = x.Id, CompanyID = x.CompanyID }).ToList();
+            UsersViewModels = _applicationDbContext.Users.Select(x => new UserViewModel() { Email = x.Email, UserID = x.Id, CompanyID = x.CompanyID }).ToList();
 
             foreach (var user in UsersViewModels)
             {
-                user.Roles = string.Join(", ", _applicationDbContext.UserRoles.Where(x => x.UserId == user.UserID).Select(x => x.RoleId)); 
+                user.Roles = string.Join(", ", _applicationDbContext.UserRoles.Where(x => x.UserId == user.UserID).Select(x => x.RoleId));
             }
         }
+
+
+        #region AddUser
+        public AddUserViewModel AddUserViewModel { get; set; }
+        public List<(string ID, string Name)> Companies { get; set; }
+
 
         public async Task InitializeAddUser()
         {
@@ -85,12 +89,12 @@ namespace MilkUp.ViewModels
                 if (result.Succeeded)
                 {
                     //wartość domyślna - czy tak ma być?
-                    await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.Regular));
+                    await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.Admin));
                 }
                 else
                 {
 
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -98,12 +102,13 @@ namespace MilkUp.ViewModels
                 throw ex;
             }
 
-            
+
 
             AddUserViewModel = null;
         }
-        
+        #endregion
 
+        #region HandJobs
         public async Task InitNewRoleAndAssignLoggedUser()
         {
             //var role = new IdentityRole();
@@ -129,5 +134,7 @@ namespace MilkUp.ViewModels
 
             //var result = await _roleManager.CreateAsync(role);
         }
+        #endregion
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MilkUp.ViewModels.SuperAdminPanel
+namespace MilkUp.ViewModels.SuperUserPanel
 {
     public class AddUserViewModel
     {

@@ -1,6 +1,6 @@
-﻿namespace MilkUp.ViewModels.SuperAdminPanel
+﻿namespace MilkUp.ViewModels.SuperUserPanel
 {
-    public class UsersViewModel
+    public class UserViewModel
     {
         public string UserID { get; set; }
         public string Email { get; set; }

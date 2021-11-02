@@ -1,73 +1,107 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using MilkUp.Data;
+using MilkUp.Enums;
 using MilkUp.Models;
+using MilkUp.ViewModels.AdminPanel;
 using MilkUp.ViewModels.Interfaces;
-using MilkUp.ViewModels.SuperAdminPanel;
+using MilkUp.ViewModels.SuperUserPanel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MilkUp.ViewModels
 {
-    public class AdminPanelViewModel : IAdminPanelViewModel
+    public class AdminPanelViewModel : BaseViewModel, IAdminPanelViewModel
     {
-        readonly ApplicationDbContext _applicationDbContext;
-        readonly AuthenticationStateProvider _authenticationStateProvider;
-        readonly UserManager<ApplicationUser> _userManager;
-        int _companyID = 1;
-
         public AdminPanelViewModel(ApplicationDbContext applicationDbContext,
-            UserManager<ApplicationUser> userManager,
-            AuthenticationStateProvider authenticationStateProvider)
+                                   UserManager<ApplicationUser> userManager,
+                                   AuthenticationStateProvider authenticationStateProvider)
+            : base(authenticationStateProvider,
+                  applicationDbContext,
+                  userManager)
         {
-            _applicationDbContext = applicationDbContext;
-            _userManager = userManager;
-            _authenticationStateProvider = authenticationStateProvider;
-
-            InitializeViewModel2().GetAwaiter().GetResult();
+            InitializeViewModel();
         }
 
-        public List<UsersViewModel> UsersViewModels { get; set; }
+        public List<UserViewModel> UsersViewModels { get; set; }
+        public List<FarmViewModel> FarmsViewModels { get; set; }
+        public List<CowGroupsViewModel> CowGroupsViewModels { get; set; }
 
-        public async Task InitializeViewModel2()
-        {
-            _companyID = 1; //HACK! TODO BUG - GET FROM USER!
-            //var state = _authenticationStateProvider.GetAuthenticationStateAsync();
-            //var user = _userManager.GetUserAsync(state.Result.User);
-            //_companyID = user.Result.CompanyID;
-
-            //if (_companyID == 0) //means y are SuperUser
-            //    _companyID = 1;
-
-            UsersViewModels = _applicationDbContext.Users
-                .Where(x => x.CompanyID == _companyID)
-                .Select(x => new UsersViewModel() { Email = x.Email, UserID = x.Id, CompanyID = _companyID })
-                .ToList();
-
-            foreach (var userVM in UsersViewModels)
-            {
-                userVM.Roles = string.Join(", ", _applicationDbContext.UserRoles.Where(x => x.UserId == userVM.UserID).Select(x => x.RoleId));
-            }
-        }
         public async Task InitializeViewModel()
         {
-            var state = await _authenticationStateProvider.GetAuthenticationStateAsync();
-            var user = await _userManager.GetUserAsync(state.User);
-            _companyID = user.CompanyID;
-
-            if (_companyID == 0) //means y are SuperUser
-                _companyID = 1;
-
-            UsersViewModels = _applicationDbContext.Users
-                .Where(x => x.CompanyID == _companyID)
-                .Select(x => new UsersViewModel() { Email = x.Email, UserID = x.Id, CompanyID = _companyID })
-                .ToList();
-
-            foreach (var userVM in UsersViewModels)
+            if (_userCompanyID.HasValue)
             {
-                userVM.Roles = string.Join(", ", _applicationDbContext.UserRoles.Where(x => x.UserId == userVM.UserID).Select(x => x.RoleId));
+                UsersViewModels = _applicationDbContext.Users
+                    .Where(x => x.CompanyID == _userCompanyID.Value)
+                    .Select(x => new UserViewModel() { Email = x.Email, UserID = x.Id, CompanyID = _userCompanyID.Value })
+                    .ToList();
+                foreach (var userVM in UsersViewModels)
+                    userVM.Roles = string.Join(", ", _applicationDbContext.UserRoles.Where(x => x.UserId == userVM.UserID).Select(x => x.RoleId));
+
+                FarmsViewModels = _applicationDbContext.Farms
+                    .Where(x => x.CompanyID == _userCompanyID.Value && !x.DateDeleted.HasValue)
+                    .Select(x => new FarmViewModel() { ID = x.ID, Name = x.Name, DateAdded = x.DateAdded })
+                    .ToList();
+
+                CowGroupsViewModels = _applicationDbContext.CowGroups
+                    //.Where(x => x.CompanyID == _userCompanyID.Value && !x.DateDeleted.HasValue) //todo add migration and apply code
+                    .Select(x => new CowGroupsViewModel() { ID = x.ID, Name = x.Name })
+                    .ToList();
             }
         }
+
+        #region Add new user
+        public AddUserViewModel AddUserViewModel { get; set; }
+
+        public async Task InitializeAddUser()
+        {
+            AddUserViewModel = new AddUserViewModel();
+        }
+
+        public async Task CancelAddUser()
+        {
+            if (!_userCompanyID.HasValue)
+                return;
+
+            AddUserViewModel = null;
+        }
+
+        public async Task AddNewUser()
+        {
+            if (!_userCompanyID.HasValue)
+                return;
+
+            //todo walidacja
+
+            var user = new ApplicationUser();
+            user.Email = AddUserViewModel.Email;
+            user.UserName = AddUserViewModel.Email;
+            user.CompanyID = _userCompanyID.Value;
+
+            user.EmailConfirmed = true;
+            user.ConcurrencyStamp = Guid.NewGuid().ToString();
+
+            try
+            {
+                var result = await _userManager.CreateAsync(user, AddUserViewModel.Password);
+                if (result.Succeeded)
+                {
+                    //wartość domyślna - czy tak ma być?
+                    await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.Regular));
+                }
+                else
+                {
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            AddUserViewModel = null;
+        }
+        #endregion
     }
 }

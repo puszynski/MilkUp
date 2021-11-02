@@ -8,6 +8,10 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20211023043305_InitialCreate.cs" />
     <Compile Remove="Data\Migrations\20211023043305_InitialCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20211102212027_test.cs" />
+    <Compile Remove="Data\Migrations\20211102212027_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20211102212508_addCompanyID_to_Cow_and_CowGroup.cs" />
+    <Compile Remove="Data\Migrations\20211102212508_addCompanyID_to_Cow_and_CowGroup.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

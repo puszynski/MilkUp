@@ -34,7 +34,7 @@ namespace MilkUp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("LocalConnection")));
-
+            
             services.AddDefaultIdentity<ApplicationUser>(options => 
                 { 
                     options.SignIn.RequireConfirmedAccount = false; 
@@ -42,6 +42,8 @@ namespace MilkUp
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                     options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 4;
+
                     options.User.RequireUniqueEmail = true;
                 })
                 .AddRoles<IdentityRole>()
@@ -54,7 +56,7 @@ namespace MilkUp
 
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();         
             services.AddScoped<ICowsViewModel, CowsViewModel>(); //AddScoped - one instance per user
-            services.AddScoped<ISuperAdminPanelViewModel, SuperAdminPanelViewModel>();
+            services.AddScoped<ISuperUserPanelViewModel, SuperUserPanelViewModel>();
             services.AddScoped<ISignInViewModel, SignInViewModel>();
             services.AddScoped<IAdminPanelViewModel, AdminPanelViewModel>();
 

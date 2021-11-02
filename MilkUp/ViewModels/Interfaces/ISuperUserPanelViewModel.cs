@@ -1,14 +1,14 @@
-﻿using MilkUp.ViewModels.SuperAdminPanel;
+﻿using MilkUp.ViewModels.SuperUserPanel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MilkUp.ViewModels.Interfaces
 {
-    public interface ISuperAdminPanelViewModel
+    public interface ISuperUserPanelViewModel
     {
         AddUserViewModel AddUserViewModel { get; set; }
         List<(string ID, string Name)> Companies { get; set; }
-        List<UsersViewModel> UsersViewModels { get; set; }
+        List<UserViewModel> UsersViewModels { get; set; }
 
         Task InitializeViewModel();
         Task InitializeAddUser();
