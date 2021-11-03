@@ -8,5 +8,7 @@ namespace MilkUp.Models
 
         public ICollection<Farm> Farms { get; set; }
         public ICollection<CompanyPayment> CompanyPayments {  get; set; }
+        public ICollection<CowGroup> CowGroups { get; set; }
+        public ICollection<Cow> Cows { get; set; }
     }
 }

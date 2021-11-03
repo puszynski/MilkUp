@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MilkUp.Data;
 
 namespace MilkUp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211103062736_Add_CompanyID_to_Cow_Farm")]
+    partial class Add_CompanyID_to_Cow_Farm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -449,7 +451,7 @@ namespace MilkUp.Data.Migrations
                     b.Property<int?>("LitersCollected")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("To")
+                    b.Property<DateTime>("To")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");

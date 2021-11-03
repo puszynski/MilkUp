@@ -2,7 +2,7 @@
 
 namespace MilkUp.ViewModels.Cows
 {
-    public class AddCowFormViewModel
+    public class AddCowViewModel
     {
         [Required]
         //[Range(typeof(bool), "true", "true", ErrorMessage = "Wybierz tak lub nie")]

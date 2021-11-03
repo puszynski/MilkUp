@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MilkUp.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace MilkUp.Models
 {
-    public class Cow : EntityBase
+    public class Cow : EntityBase, ICompany
     {        
         public int NameOnFarm { get; set; }//ID used on farm
         public int EarringNumber { get; set; }//Reg1 – to numer kolczyka nadawany jest zaraz po urodzeniu (Ryc. 3).
@@ -27,9 +28,12 @@ namespace MilkUp.Models
         public int CowGroupID {  get; set; }
         public CowGroup CowGroup {  get; set; }
 
+        public int CompanyID { get; set; }
+        public Company Company { get; set; }
+
         //wpisujemy z łapy czy program wylicza?
         //public int DailyMilk { get; set; }//wydajnoć dzienna - specka pytanie czy tu czy w laktacji czy osobna tabela?
-        
+
         //to chyba nie w bazie danych tylko wyliczamy na jakiejś podstawie?
         //public DateTime EstimatedLactationEnd { get; set; }//przewidywana data zasuszenia,
     }

@@ -14,6 +14,12 @@
     <Compile Remove="Data\Migrations\20211102212508_addCompanyID_to_Cow_and_CowGroup.Designer.cs" />
     <Compile Remove="Data\Migrations\20211102213058_test.cs" />
     <Compile Remove="Data\Migrations\20211102213058_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20211102213350_Add_CompanyID_to_CowGroups.cs" />
+    <Compile Remove="Data\Migrations\20211102213350_Add_CompanyID_to_CowGroups.Designer.cs" />
+    <Compile Remove="Data\Migrations\20211103063008_Add_Company_refrence_to_ApplicationUser.cs" />
+    <Compile Remove="Data\Migrations\20211103063008_Add_Company_refrence_to_ApplicationUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20211103071806_Lctation_set_To_nullable.cs" />
+    <Compile Remove="Data\Migrations\20211103071806_Lctation_set_To_nullable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

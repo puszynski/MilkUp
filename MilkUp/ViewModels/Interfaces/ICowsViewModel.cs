@@ -10,7 +10,7 @@ namespace MilkUp.ViewModels.Interfaces
 
         SelectedCowViewModel SelectedCowViewModel {  get; set; }
 
-        AddCowFormViewModel AddCowFormViewModel {  get; set; }
+        AddCowViewModel AddCowViewModel {  get; set; }
         List<(string FarmID, string FarmName)> Farms { get; set; }
 
         string SearchFilter { get; set; }

@@ -46,7 +46,7 @@ namespace MilkUp.ViewModels
                     .ToList();
 
                 CowGroupsViewModels = _applicationDbContext.CowGroups
-                    //.Where(x => x.CompanyID == _userCompanyID.Value && !x.DateDeleted.HasValue) //todo add migration and apply code
+                    .Where(x => x.CompanyID == _userCompanyID.Value && !x.DateDeleted.HasValue) //todo add migration and apply code
                     .Select(x => new CowGroupsViewModel() { ID = x.ID, Name = x.Name })
                     .ToList();
             }

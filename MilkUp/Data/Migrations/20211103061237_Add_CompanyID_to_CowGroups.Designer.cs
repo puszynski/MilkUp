@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MilkUp.Data;
 
 namespace MilkUp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211103061237_Add_CompanyID_to_CowGroups")]
+    partial class Add_CompanyID_to_CowGroups
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -312,9 +314,6 @@ namespace MilkUp.Data.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CompanyID")
-                        .HasColumnType("int");
-
                     b.Property<int>("CowGroupID")
                         .HasColumnType("int");
 
@@ -349,8 +348,6 @@ namespace MilkUp.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CompanyID");
 
                     b.HasIndex("CowGroupID");
 
@@ -449,7 +446,7 @@ namespace MilkUp.Data.Migrations
                     b.Property<int?>("LitersCollected")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("To")
+                    b.Property<DateTime>("To")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
@@ -521,12 +518,6 @@ namespace MilkUp.Data.Migrations
 
             modelBuilder.Entity("MilkUp.Models.Cow", b =>
                 {
-                    b.HasOne("MilkUp.Models.Company", "Company")
-                        .WithMany("Cows")
-                        .HasForeignKey("CompanyID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MilkUp.Models.CowGroup", "CowGroup")
                         .WithMany("Cows")
                         .HasForeignKey("CowGroupID")
@@ -559,7 +550,7 @@ namespace MilkUp.Data.Migrations
 
             modelBuilder.Entity("MilkUp.Models.Farm", b =>
                 {
-                    b.HasOne("MilkUp.Models.Company", "Company")
+                    b.HasOne("MilkUp.Models.Company", null)
                         .WithMany("Farms")
                         .HasForeignKey("CompanyID")
                         .OnDelete(DeleteBehavior.Cascade)

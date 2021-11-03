@@ -42,7 +42,7 @@ namespace MilkUp.ViewModels
         public List<CowListViewModel> CowList { get; set; }
         public SelectedCowViewModel SelectedCowViewModel { get; set; }
         
-        public AddCowFormViewModel AddCowFormViewModel { get; set; }
+        public AddCowViewModel AddCowViewModel { get; set; }
         public List<(string FarmID, string FarmName)> Farms { get; set; } = new List<(string FarmID, string FarmName)>() { ("1", "Gdańsk"), ("2", "Puszczykowo") };
 
         public string SearchFilter { get; set; }
@@ -50,13 +50,13 @@ namespace MilkUp.ViewModels
         public async Task InitializeNewCowForm()
         {
             await Task.Delay(0);//hack to "run async"
-            AddCowFormViewModel = new AddCowFormViewModel() { IsFarmBorn = true };
+            AddCowViewModel = new AddCowViewModel() { IsFarmBorn = true };
         }
 
         public async Task CancelAddCowForm()
         {
             await Task.Delay(0);//hack to "run async"
-            AddCowFormViewModel = null;
+            AddCowViewModel = null;
         }
 
         public async Task AddNewCow()
@@ -67,11 +67,11 @@ namespace MilkUp.ViewModels
 
             var cow = new Cow()
             {
-                NameOnFarm = AddCowFormViewModel.NameOnFarm.Value,
-                FarmID = int.Parse(AddCowFormViewModel.FarmID),
+                NameOnFarm = AddCowViewModel.NameOnFarm.Value,
+                FarmID = int.Parse(AddCowViewModel.FarmID),
                 BirthDate = new System.DateTime(2010, 10, 1),
-                EarringNumber = AddCowFormViewModel.EarringNumber.Value,
-                TransponderNumber = AddCowFormViewModel.TransponderNumber.Value,
+                EarringNumber = AddCowViewModel.EarringNumber.Value,
+                TransponderNumber = AddCowViewModel.TransponderNumber.Value,
                 CowGroupID = 1
             };
 
@@ -98,7 +98,7 @@ namespace MilkUp.ViewModels
             }
 
 
-            AddCowFormViewModel = null;
+            AddCowViewModel = null;
             //StateHasChanged(); //use https://itnext.io/mvvm-and-blazor-components-and-statehaschanged-a31be365638b Option 5: EventCallback (Use this one) to fire up StateHasChanged()
         }
 
