@@ -14,7 +14,7 @@ namespace MilkUp.ViewModels.Interfaces
         Task InitializeAddUser();
         Task CancelAddUser();
         Task AddNewUser();
-        Task InitNewRoleAndAssignLoggedUser();
-        Task CreateNewRole();
+        Task CreateSuperUser();
+        Task CreateInitRoles();
     }
 }

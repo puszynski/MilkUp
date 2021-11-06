@@ -128,6 +128,17 @@ namespace MilkUp.Repositories
             return entity;
         }
 
+        public virtual async Task InsertRange(IEnumerable<TEntity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                entity.DateAdded = DateTime.UtcNow;
+                entity.DateUpdated = DateTime.UtcNow;
+            }
+            
+            _dbSet.AddRangeAsync(entities);
+        }
+
         public async Task<TEntity> Update(TEntity entityToUpdate)
         {
             entityToUpdate.DateUpdated = DateTime.UtcNow;

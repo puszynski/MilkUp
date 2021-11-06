@@ -1,5 +1,5 @@
 ﻿@page "/superuserpanel"
-@attribute [Authorize(Roles = "SuperUser")]
+@*@attribute [Authorize(Roles = "SuperUser")]*@
 
 @using Models
 @using Microsoft.AspNetCore.Identity;
@@ -16,8 +16,8 @@
 <h2>Role użytkowników</h2>
 <p>Todo - lista?</p>
 <p>dodaj nową role - UWAGA! W celu dodania nowej roli nanieś zmiany w kodzie (tj. dodaj nowy enum EAspNetRole i użyj go w metodzie)</p>
-<button @onclick="@_superAdminPanelViewModel.CreateNewRole">Dodaj role. Uwaga! Potrzbe zmiany w kodzie</button>
-<button @onclick="@_superAdminPanelViewModel.InitNewRoleAndAssignLoggedUser">Jednorazowo! Utwórz role SuperUsera i przypisz do niej zalogowanego usera</button>
+<button @onclick="@_superAdminPanelViewModel.CreateInitRoles">Jednorazowo! Zainicjuj role: regular, admin, superUser</button>
+<button @onclick="@_superAdminPanelViewModel.CreateSuperUser">Jednorazowo! Utwórz konto superusera i przypisze do roli SuperUser(musi już być)</button>
 
 
 <hr />

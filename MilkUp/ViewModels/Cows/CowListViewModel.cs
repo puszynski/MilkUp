@@ -8,6 +8,7 @@
         public string FarmName { get; set; }
         public int? ParentID { get; set; }
         public int LactationCount { get; set; }
+        public int AgeDisplay { get; set; }
         public bool IsFemale { get; set; }
     }
 }

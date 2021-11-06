@@ -9,6 +9,7 @@ namespace MilkUp.Data
 {
     public class DbInitializer
     {
+        //Uwaga - jest jakiś błąd - przy inicjalizacji db produkcyjnej 06.11.2021 nic się nie dodało!
         public static void Initialize(ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
@@ -42,10 +43,10 @@ namespace MilkUp.Data
 
             context.Companies.Add(company1);
 
-            var lactation_07_2021 = new Lactation() { CowID = 1, DayOfLactationing = 56, LitersCollected = 20, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
-            var lactation_08_2021 = new Lactation() { CowID = 1, DayOfLactationing = 66, LitersCollected = 21, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
-            var lactation_09_2021 = new Lactation() { CowID = 1, DayOfLactationing = 75, LitersCollected = 20, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
-            var lactation_10_2021 = new Lactation() { CowID = 1, DayOfLactationing = 7, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
+            var lactation_07_2021 = new Lactation() { CowID = 1, LitersCollected = 20, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
+            var lactation_08_2021 = new Lactation() { CowID = 1, LitersCollected = 21, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
+            var lactation_09_2021 = new Lactation() { CowID = 1, LitersCollected = 20, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
+            var lactation_10_2021 = new Lactation() { CowID = 1, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
 
             var lactations = new List<Lactation>();
             lactations.Add(lactation_07_2021);
@@ -66,12 +67,12 @@ namespace MilkUp.Data
 
             context.Bulls.Add(bull);
 
-            var cow1 = new Cow() { NameOnFarm = 2001, EarringNumber = 221, TransponderNumber = 123, Farm = farm1, ParentCowID = null, IsMale = false, BirthDate = new DateTime(2020, 01, 27), Lactations = lactations, CowGroupID = 1, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
+            var cow1 = new Cow() { NameOnFarm = 2001, EarringNumber = 221, TransponderNumber = 123, Farm = farm1, ParentCowID = null, IsMale = false, BirthDate = new DateTime(2020, 01, 27), Lactations = lactations, CowGroupID = 1, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, CompanyID = 1 };
 
 
-            var cow2 = new Cow() { NameOnFarm = 2002, EarringNumber = 222, TransponderNumber = 124, Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = false, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
+            var cow2 = new Cow() { NameOnFarm = 2002, EarringNumber = 222, TransponderNumber = 124, Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = false, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, CompanyID = 1 };
 
-            var cow3 = new Cow() { NameOnFarm = 2003, EarringNumber = 223, TransponderNumber = 125, Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = true, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow };
+            var cow3 = new Cow() { NameOnFarm = 2003, EarringNumber = 223, TransponderNumber = 125, Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = true, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, CompanyID = 1 };
 
             context.Cows.Add(cow1);
             context.Cows.Add(cow2);

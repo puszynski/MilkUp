@@ -11,7 +11,7 @@ namespace MilkUp.Models
         public DateTime From { get; set; }
         public DateTime? To { get; set; } //null when lactationing/starting
 
-        public int DayOfLactationing { get; set; }
+        //public int DayOfLactationing { get; set; } <= wyliczane z dat
         public int? LitersCollected { get; set; } //null when lactationing/starting
     }
 }

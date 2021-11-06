@@ -12,11 +12,13 @@ namespace MilkUp.ViewModels.Interfaces
 
         AddCowViewModel AddCowViewModel {  get; set; }
         List<(string FarmID, string FarmName)> Farms { get; set; }
+        List<(string ID, string Name)> CowGroups { get; set; }
 
         string SearchFilter { get; set; }
 
         Task InitializeNewCowForm();
         Task CancelAddCowForm();
+        Task AddNewCowNewLactation();
         Task AddNewCow();
         Task DisplaySelectedCowViewModel(int cowID);
     }

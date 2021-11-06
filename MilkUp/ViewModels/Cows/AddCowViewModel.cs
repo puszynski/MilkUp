@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MilkUp.ViewModels.Cows
 {
@@ -17,13 +19,18 @@ namespace MilkUp.ViewModels.Cows
 
         #region out of farm
         //[Required] todo
-        public int? CowGroupID { get; set; }
+        public string CowGroupID { get; set; }
 
         [Required]
         public int? EarringNumber { get; set; }
 
         [Required]
         public int? TransponderNumber { get; set; }
+
+        [Required]
+        public DateTime? BirthDate { get; set; }
+
+        public List<LactationViewModel> LactationsViewModels { get; set; }
         #endregion
 
 

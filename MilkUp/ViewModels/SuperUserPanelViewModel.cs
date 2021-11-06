@@ -109,30 +109,52 @@ namespace MilkUp.ViewModels
         #endregion
 
         #region HandJobs
-        public async Task InitNewRoleAndAssignLoggedUser()
+        public async Task CreateSuperUser()
         {
-            //var role = new IdentityRole();
-            //role.Name = nameof(EAspNetRole.SuperUser);
-            //role.NormalizedName = nameof(EAspNetRole.SuperUser).ToUpper();
-            //role.ConcurrencyStamp = Guid.NewGuid().ToString();
+            var user = new ApplicationUser();
+            user.Email = "puszynski@gmail.com";
+            user.UserName = "puszynski@gmail.com";
+            user.CompanyID = 0;
 
-            //var result = await _roleManager.CreateAsync(role);
+            user.EmailConfirmed = true;
+            user.ConcurrencyStamp = Guid.NewGuid().ToString();
 
-            //if (result.Succeeded)
-            //{
-            //    var state = _authenticationStateProvider.GetAuthenticationStateAsync();
-            //    var user = await _userManager.GetUserAsync(state.Result.User);
-            //    var result2 = await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.SuperUser));
-            //}
+            try
+            {
+                var result = await _userManager.CreateAsync(user, "RazDwaTrzy123");
+                if (result.Succeeded)
+                {
+                    //wartość domyślna - czy tak ma być?
+                    await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.SuperUser));
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
-        public async Task CreateNewRole()
+        public async Task CreateInitRoles()
         {
-            var role = new IdentityRole();
-            //role.Name = nameof(EAspNetRole.Regular); //add new EAspNetRole here
+            //var role = new IdentityRole();
+            //role.Name = nameof(EAspNetRole.Regular);
             //role.ConcurrencyStamp = Guid.NewGuid().ToString();
-
             //var result = await _roleManager.CreateAsync(role);
+
+            //var role2 = new IdentityRole();
+            //role2.Name = nameof(EAspNetRole.Admin);
+            //role2.ConcurrencyStamp = Guid.NewGuid().ToString();
+            //var result2 = await _roleManager.CreateAsync(role2);
+
+            //var role3 = new IdentityRole();
+            //role3.Name = nameof(EAspNetRole.SuperUser);
+            //role3.ConcurrencyStamp = Guid.NewGuid().ToString();
+            //var result3 = await _roleManager.CreateAsync(role3);
         }
         #endregion
 

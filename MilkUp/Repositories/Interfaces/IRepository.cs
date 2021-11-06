@@ -22,7 +22,8 @@ namespace MilkUp.Repositories.Interfaces
                                            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                            string includeProperties = "");
 
-        Task<TEntity> Insert(TEntity entity);   
+        Task<TEntity> Insert(TEntity entity);
+        Task InsertRange(IEnumerable<TEntity> entities);//not tested yet
         Task<TEntity> Update(TEntity entity);
 
         Task Save();
