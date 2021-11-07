@@ -13,9 +13,8 @@
 <p>Z tego miejsca odbywać się będzie zarządzanie firmami, farmami, użytkownikami - tylko super user</p>
 
 <hr />
-<h2>Role użytkowników</h2>
-<p>Todo - lista?</p>
-<p>dodaj nową role - UWAGA! W celu dodania nowej roli nanieś zmiany w kodzie (tj. dodaj nowy enum EAspNetRole i użyj go w metodzie)</p>
+
+<h2>Akcje jednorazowe</h2>
 <button @onclick="@_superAdminPanelViewModel.CreateInitRoles">Jednorazowo! Zainicjuj role: regular, admin, superUser</button>
 <button @onclick="@_superAdminPanelViewModel.CreateSuperUser">Jednorazowo! Utwórz konto superusera i przypisze do roli SuperUser(musi już być)</button>
 
@@ -81,6 +80,17 @@
                         }
                 </InputSelect>
                 <label for="floatingSelect">Firma</label>
+            </div>
+
+            <div class="form-floating">
+                <InputSelect class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind-Value="_superAdminPanelViewModel.AddUserViewModel.RoleName">
+                    <option value="">Wybierz role</option>
+                    @foreach (var role in _superAdminPanelViewModel.Roles)
+                        {
+                        <option value="@role.Name">@role.Name</option>
+                        }
+                </InputSelect>
+                <label for="floatingSelect">Rola</label>
             </div>
 
             <button type="submit" class="btn btn-secondary btn-sm">Dodaj</button>

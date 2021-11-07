@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using MilkUp.Data;
 using MilkUp.Enums;
 using MilkUp.Models;
-using MilkUp.Repositories;
 using MilkUp.Repositories.Interfaces;
 using MilkUp.ViewModels.Interfaces;
 using MilkUp.ViewModels.SuperUserPanel;
@@ -53,6 +52,8 @@ namespace MilkUp.ViewModels
         #region AddUser
         public AddUserViewModel AddUserViewModel { get; set; }
         public List<(string ID, string Name)> Companies { get; set; }
+        public List<(string ID, string Name)> Roles {  get; set; } 
+
 
 
         public async Task InitializeAddUser()
@@ -62,6 +63,16 @@ namespace MilkUp.ViewModels
             Companies = new List<(string ID, string Name)>();
             foreach (var item in data)
                 Companies.Add((item.Item1.ToString(), item.Item2));
+
+            var queryRoles = _applicationDbContext
+                .Roles
+                .Select(x => new Tuple<string, string>(x.Id, x.Name))
+                .AsEnumerable()
+                .Select(x => (ID: x.Item1, Name: x.Item2))
+                .ToList();
+            Roles = new List<(string ID, string Name)>();
+            foreach (var item in queryRoles)
+                Roles.Add((item.Item1.ToString(), item.Item2));
 
             AddUserViewModel = new AddUserViewModel();
         }
@@ -89,7 +100,7 @@ namespace MilkUp.ViewModels
                 if (result.Succeeded)
                 {
                     //wartość domyślna - czy tak ma być?
-                    await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.Admin));
+                    await _userManager.AddToRoleAsync(user, nameof(AddUserViewModel.RoleName));
                 }
                 else
                 {

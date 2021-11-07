@@ -8,6 +8,8 @@ namespace MilkUp.ViewModels.Interfaces
     {
         AddUserViewModel AddUserViewModel { get; set; }
         List<(string ID, string Name)> Companies { get; set; }
+        List<(string ID, string Name)> Roles { get; set; }
+
         List<UserViewModel> UsersViewModels { get; set; }
 
         Task InitializeViewModel();
