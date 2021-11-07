@@ -1,5 +1,5 @@
 ﻿@page "/superuserpanel"
-@*@attribute [Authorize(Roles = "SuperUser")]*@
+@attribute [Authorize(Roles = "SuperUser")]
 
 @using Models
 @using Microsoft.AspNetCore.Identity;
@@ -7,21 +7,19 @@
 @inject UserManager<ApplicationUser> _userManager
 @inject RoleManager<IdentityRole> _roleManager
 @inject AuthenticationStateProvider _authenticationStateProvider
-@inject ISuperUserPanelViewModel _superAdminPanelViewModel
+@inject ISuperUserPanelViewModel _VM
 
 <h1>Panel zarządzania aplikacji</h1>
 <p>Z tego miejsca odbywać się będzie zarządzanie firmami, farmami, użytkownikami - tylko super user</p>
-
 <hr />
 
 <h2>Akcje jednorazowe</h2>
-<button @onclick="@_superAdminPanelViewModel.CreateInitRoles">Jednorazowo! Zainicjuj role: regular, admin, superUser</button>
-<button @onclick="@_superAdminPanelViewModel.CreateSuperUser">Jednorazowo! Utwórz konto superusera i przypisze do roli SuperUser(musi już być)</button>
-
+<button type="button" class="btn btn-secondary btn-sm" @onclick="@_VM.CreateInitRoles">Jednorazowo! Zainicjuj role: regular, admin, superUser</button>
+<button type="button" class="btn btn-secondary btn-sm" @onclick="@_VM.CreateSuperUser">Jednorazowo! Utwórz konto superusera i przypisze do roli SuperUser(musi już być)</button>
 
 <hr />
 <h2>Użytkownicy:</h2>
-@if (_superAdminPanelViewModel.UsersViewModels != null)
+@if (_VM.UsersViewModels != null)
 {
     <table class="table table-hover table-sm">
         <thead>
@@ -33,7 +31,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var userViewModel in _superAdminPanelViewModel.UsersViewModels)
+            @foreach (var userViewModel in _VM.UsersViewModels)
             {
                 <tr class="bg-hover-white-smoke w-100 pointer">
                     <th scope="row"> @userViewModel.UserID </th>
@@ -47,34 +45,34 @@
 }
 
 
-@if (_superAdminPanelViewModel.AddUserViewModel == null)
+@if (_VM.AddUserViewModel == null)
 {
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="button" class="btn btn-secondary btn-sm" @onclick="_superAdminPanelViewModel.InitializeAddUser">Dodaj</button>
+        <button type="button" class="btn btn-secondary btn-sm" @onclick="_VM.InitializeAddUser">Dodaj</button>
     </div>
 }
-@if (_superAdminPanelViewModel.AddUserViewModel != null)
+else
 {
     <div class="alert alert-secondary mt-4" role="alert">
         <h4>Dodaj nowego użytkownika</h4>
-        <EditForm Model="@_superAdminPanelViewModel.AddUserViewModel" OnValidSubmit="@_superAdminPanelViewModel.AddNewUser">
+        <EditForm Model="@_VM.AddUserViewModel" OnValidSubmit="@_VM.AddNewUser">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
             <div class="form-floating">
-                <InputText type="email" class="form-control" placeholder="hack" @bind-Value="_superAdminPanelViewModel.AddUserViewModel.Email" />
+                <InputText type="email" class="form-control" placeholder="hack" @bind-Value="_VM.AddUserViewModel.Email" />
                 <label>Email(login)</label>
             </div>
 
             <div class="form-floating">
-                <InputText type="password" class="form-control" placeholder="hack" @bind-Value="_superAdminPanelViewModel.AddUserViewModel.Password" />
+                <InputText type="password" class="form-control" placeholder="hack" @bind-Value="_VM.AddUserViewModel.Password" />
                 <label>Hasło</label>
             </div>
 
             <div class="form-floating">
-                <InputSelect class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind-Value="_superAdminPanelViewModel.AddUserViewModel.CompanyID">
+                <InputSelect class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind-Value="_VM.AddUserViewModel.CompanyID">
                     <option value="">Wybierz firme</option>
-                    @foreach (var company in _superAdminPanelViewModel.Companies)
+                    @foreach (var company in _VM.Companies)
                         {
                         <option value="@company.ID">@company.Name</option>
                         }
@@ -83,9 +81,9 @@
             </div>
 
             <div class="form-floating">
-                <InputSelect class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind-Value="_superAdminPanelViewModel.AddUserViewModel.RoleName">
+                <InputSelect class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind-Value="_VM.AddUserViewModel.RoleName">
                     <option value="">Wybierz role</option>
-                    @foreach (var role in _superAdminPanelViewModel.Roles)
+                    @foreach (var role in _VM.Roles)
                         {
                         <option value="@role.Name">@role.Name</option>
                         }
@@ -94,14 +92,58 @@
             </div>
 
             <button type="submit" class="btn btn-secondary btn-sm">Dodaj</button>
-            <button class="btn btn-secondary btn-sm" @onclick="_superAdminPanelViewModel.CancelAddUser">Anuluj</button>
+            <button class="btn btn-secondary btn-sm" @onclick="_VM.CancelAddUser">Anuluj</button>
         </EditForm>
     </div>
 }
 
 <hr />
 <h2>Firmy i farmy:</h2>
-<p1>todo add new company</p1>
+@if (_VM.AddCompanyViewModel == null)
+{
+    <button type="button" class="btn btn-secondary btn-sm" @onclick="_VM.InitializeAddCompany">Dodaj firme</button>
+}
+else
+{
+    <div class="alert alert-secondary mt-4" role="alert">
+        <h4>Dodaj nową firme</h4>
+        <EditForm Model="@_VM.AddCompanyViewModel" OnValidSubmit="@_VM.AddCompany">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-floating">
+                <InputText type="text" class="form-control" placeholder="hack" @bind-Value="_VM.AddCompanyViewModel.Name" />
+                <label>Nazwa</label>
+            </div>
+
+            <button type="submit" class="btn btn-secondary btn-sm">Dodaj</button>
+            <button class="btn btn-secondary btn-sm" @onclick="_VM.CancelAddCompany">Anuluj</button>
+        </EditForm>
+    </div>
+}
+
+@if (_VM.CompaniesViewModels != null)
+{
+    <table class="table table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Data utworzenia</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var companyViewModel in _VM.CompaniesViewModels)
+            {
+                <tr class="bg-hover-white-smoke w-100 pointer">
+                    <td> @companyViewModel.Name </td>
+                    <td> @companyViewModel.DateAdded </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
 <p2>todo add new farm</p2>
 
 

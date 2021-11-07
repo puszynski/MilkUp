@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using MilkUp.Data;
 using MilkUp.Enums;
 using MilkUp.Models;
+using MilkUp.Repositories.Interfaces;
 using MilkUp.ViewModels.AdminPanel;
 using MilkUp.ViewModels.Interfaces;
 using MilkUp.ViewModels.SuperUserPanel;
@@ -15,13 +16,20 @@ namespace MilkUp.ViewModels
 {
     public class AdminPanelViewModel : BaseViewModel, IAdminPanelViewModel
     {
+        readonly ICowGroupRepository _cowGroupRepository;
+        readonly IFarmRepository _farmRepository;
+
         public AdminPanelViewModel(ApplicationDbContext applicationDbContext,
                                    UserManager<ApplicationUser> userManager,
-                                   AuthenticationStateProvider authenticationStateProvider)
+                                   AuthenticationStateProvider authenticationStateProvider,
+                                   ICowGroupRepository cowGroupRepository,
+                                   IFarmRepository farmRepository)
             : base(authenticationStateProvider,
                   applicationDbContext,
                   userManager)
         {
+            _cowGroupRepository = cowGroupRepository;
+            _farmRepository = farmRepository;
             InitializeViewModel();
         }
 
@@ -68,7 +76,7 @@ namespace MilkUp.ViewModels
             AddUserViewModel = null;
         }
 
-        public async Task AddNewUser()
+        public async Task AddUser()
         {
             if (!_userCompanyID.HasValue)
                 return;
@@ -101,6 +109,51 @@ namespace MilkUp.ViewModels
             }
 
             AddUserViewModel = null;
+        }
+        #endregion
+
+        #region Add cow group
+        public AddCowGroupViewModel AddCowGroupViewModel { get; set; }
+        public async Task InitializeAddCowGroup()
+        {
+            AddCowGroupViewModel = new AddCowGroupViewModel();
+        }
+        public async Task CancelAddCowGroup()
+        {
+            AddCowGroupViewModel = null;
+        }
+        public async Task AddCowGroup()
+        {
+            if (_userCompanyID.HasValue)
+                throw new NotImplementedException();
+
+            var groupToAdd = new CowGroup() { Name = AddCowGroupViewModel.Name, CompanyID = _userCompanyID.Value };
+            _cowGroupRepository.Insert(groupToAdd);
+            AddCowGroupViewModel = null;
+            InitializeViewModel();
+        }
+        #endregion
+
+        #region Add farm
+        public AddFarmViewModel AddFarmViewModel { get; set; }
+        public async Task InitializeAddFarm()
+        {
+            AddFarmViewModel = new AddFarmViewModel();
+        }
+        public async Task CancelAddFarm()
+        {
+            AddFarmViewModel = null;
+        }
+        public async Task AddFarm()
+        {
+            if (_userCompanyID.HasValue)
+                throw new NotImplementedException();
+
+            var farmToAdd = new Farm() { Name = AddCowGroupViewModel.Name, CompanyID = _userCompanyID.Value };
+            _farmRepository.Insert(farmToAdd);
+
+            AddFarmViewModel = null;
+            InitializeViewModel();
         }
         #endregion
     }

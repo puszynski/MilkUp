@@ -68,10 +68,10 @@
                         <option value="@group.ID">@group.Name</option>
                         }
                 </InputSelect>
-                <label for="floatingSelect">Farma</label>
+                <label for="floatingSelect">Grupa</label>
             </div>
 
-            @*WAŻNE!! jeśli chcesz dodać dodatkowy button wewnątrz form który ma uruchomić inną metoda niż submit - musi być Type="button" *@
+            @*WAŻNE!! jeśli chcesz dodać dodatkowy button wewnątrz form który ma uruchomić inną metoda niż submit - musi być Type="button" inaczej będzie go traktować jako submit *@
             <h4>Laktacje</h4><button Type="button" class="btn btn-secondary btn-sm" @onclick="CowsVM.AddNewCowNewLactation">Dodaj laktacje</button>
 
             @foreach (var lactations in CowsVM.AddCowViewModel.LactationsViewModels.Select((value, index) => new { value, index }))

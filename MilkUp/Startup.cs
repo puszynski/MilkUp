@@ -63,6 +63,8 @@ namespace MilkUp
             services.AddScoped<ICowRepository, CowRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ILactationRepository, LactationRepository>();
+            services.AddScoped<ICowGroupRepository, CowGroupRepository>();
+            services.AddScoped<IFarmRepository, FarmRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline/ add middleweare - stuff between requests.
@@ -76,10 +78,10 @@ namespace MilkUp
             else
             {
                 //todo - undo!
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                //app.UseDeveloperExceptionPage();
+                //app.UseDatabaseErrorPage();
 
-                //app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

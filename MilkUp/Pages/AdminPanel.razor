@@ -1,41 +1,41 @@
 ﻿@page "/adminpanel"
 @attribute [Authorize(Roles = "Admin, SuperUser")]
-@inject IAdminPanelViewModel _adminPanelViewModel
+@inject IAdminPanelViewModel _VM
 
 <h1>Panel zarządzania</h1>
 <p>Z tego miejsca odbywać się będzie zarządzanie użytkownikami w obrębie firmy jeśli masz role administratora</p>
 
 <h2>Użytkownicy:</h2>
-@if (_adminPanelViewModel.AddUserViewModel == null)
+@if (_VM.AddUserViewModel == null)
 {
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="button" class="btn btn-secondary btn-sm" @onclick="_adminPanelViewModel.InitializeAddUser">Dodaj</button>
+        <button type="button" class="btn btn-secondary btn-sm" @onclick="_VM.InitializeAddUser">Dodaj</button>
     </div>
 }
-@if (_adminPanelViewModel.AddUserViewModel != null)
+@if (_VM.AddUserViewModel != null)
 {
     <div class="alert alert-secondary mt-4" role="alert">
         <h4>Dodaj nowego użytkownika</h4>
-        <EditForm Model="@_adminPanelViewModel.AddUserViewModel" OnValidSubmit="@_adminPanelViewModel.AddNewUser">
+        <EditForm Model="@_VM.AddUserViewModel" OnValidSubmit="@_VM.AddUser">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
             <div class="form-floating">
-                <InputText type="email" class="form-control" placeholder="hack" @bind-Value="_adminPanelViewModel.AddUserViewModel.Email" />
+                <InputText type="email" class="form-control" placeholder="hack" @bind-Value="_VM.AddUserViewModel.Email" />
                 <label>Email(login)</label>
             </div>
 
             <div class="form-floating">
-                <InputText type="password" class="form-control" placeholder="hack" @bind-Value="_adminPanelViewModel.AddUserViewModel.Password" />
+                <InputText type="password" class="form-control" placeholder="hack" @bind-Value="_VM.AddUserViewModel.Password" />
                 <label>Hasło</label>
             </div>
 
             <button type="submit" class="btn btn-secondary btn-sm">Dodaj</button>
-            <button class="btn btn-secondary btn-sm" @onclick="_adminPanelViewModel.CancelAddUser">Anuluj</button>
+            <button class="btn btn-secondary btn-sm" @onclick="_VM.CancelAddUser">Anuluj</button>
         </EditForm>
     </div>
 }
-@if (_adminPanelViewModel.UsersViewModels != null)
+@if (_VM.UsersViewModels != null)
 {
     <table class="table table-hover table-sm">
         <thead>
@@ -47,7 +47,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var userViewModel in _adminPanelViewModel.UsersViewModels)
+            @foreach (var userViewModel in _VM.UsersViewModels)
             {
                 <tr class="bg-hover-white-smoke w-100 pointer">
                     <th scope="row"> @userViewModel.UserID </th>
@@ -61,7 +61,31 @@
 }
 
 <h2>Farmy:</h2>
-@if (_adminPanelViewModel.FarmsViewModels != null)
+@if (_VM.AddFarmViewModel == null)
+{
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="button" class="btn btn-secondary btn-sm" @onclick="_VM.InitializeAddFarm">Dodaj</button>
+    </div>
+}
+@if (_VM.AddFarmViewModel != null)
+{
+    <div class="alert alert-secondary mt-4" role="alert">
+        <h4>Dodaj nową Farmę</h4>
+        <EditForm Model="@_VM.AddFarmViewModel" OnValidSubmit="@_VM.AddFarm">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-floating">
+                <InputText type="text" class="form-control" placeholder="hack" @bind-Value="_VM.AddFarmViewModel.Name" />
+                <label>Nazwa</label>
+            </div>
+
+            <button type="submit" class="btn btn-secondary btn-sm">Dodaj</button>
+            <button class="btn btn-secondary btn-sm" @onclick="_VM.CancelAddFarm">Anuluj</button>
+        </EditForm>
+    </div>
+}
+@if (_VM.FarmsViewModels != null)
 {
     <table class="table table-hover table-sm">
         <thead>
@@ -72,7 +96,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var farmViewModel in _adminPanelViewModel.FarmsViewModels)
+            @foreach (var farmViewModel in _VM.FarmsViewModels)
             {
                 <tr class="bg-hover-white-smoke w-100 pointer">
                     <th scope="row"> @farmViewModel.Name </th>
@@ -86,7 +110,31 @@
 
 
 <h2>Grupy krów:</h2>
-@if (_adminPanelViewModel.CowGroupsViewModels != null)
+@if (_VM.AddCowGroupViewModel == null)
+{
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="button" class="btn btn-secondary btn-sm" @onclick="_VM.InitializeAddCowGroup">Dodaj</button>
+    </div>
+}
+@if (_VM.AddCowGroupViewModel != null)
+{
+    <div class="alert alert-secondary mt-4" role="alert">
+        <h4>Dodaj nową grupę</h4>
+        <EditForm Model="@_VM.AddCowGroupViewModel" OnValidSubmit="@_VM.AddCowGroup">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-floating">
+                <InputText type="text" class="form-control" placeholder="hack" @bind-Value="_VM.AddCowGroupViewModel.Name" />
+                <label>Nazwa</label>
+            </div>
+
+            <button type="submit" class="btn btn-secondary btn-sm">Dodaj</button>
+            <button class="btn btn-secondary btn-sm" @onclick="_VM.CancelAddCowGroup">Anuluj</button>
+        </EditForm>
+    </div>
+}
+@if (_VM.CowGroupsViewModels != null)
 {
     <table class="table table-hover table-sm">
         <thead>
@@ -96,7 +144,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var cowGroupViewModel in _adminPanelViewModel.CowGroupsViewModels)
+            @foreach (var cowGroupViewModel in _VM.CowGroupsViewModels)
             {
                 <tr class="bg-hover-white-smoke w-100 pointer">
                     <th scope="row"> @cowGroupViewModel.Name </th>
@@ -105,8 +153,4 @@
             }
         </tbody>
     </table>
-}
-
-@code {
-
 }

@@ -37,15 +37,16 @@ namespace MilkUp.ViewModels
         }
 
         public List<UserViewModel> UsersViewModels { get; set; }
+        public List<CompanyViewModel> CompaniesViewModels { get; set; }
 
         public async Task InitializeViewModel()
         {
             UsersViewModels = _applicationDbContext.Users.Select(x => new UserViewModel() { Email = x.Email, UserID = x.Id, CompanyID = x.CompanyID }).ToList();
-
             foreach (var user in UsersViewModels)
-            {
                 user.Roles = string.Join(", ", _applicationDbContext.UserRoles.Where(x => x.UserId == user.UserID).Select(x => x.RoleId));
-            }
+
+            var result = await _companyRepository.GetQuery();
+            CompaniesViewModels = result.Select(x => new CompanyViewModel() { DateAdded = x.DateAdded, Name = x.Name }).ToList();
         }
 
 
@@ -99,8 +100,7 @@ namespace MilkUp.ViewModels
                 var result = await _userManager.CreateAsync(user, AddUserViewModel.Password);
                 if (result.Succeeded)
                 {
-                    //wartość domyślna - czy tak ma być?
-                    await _userManager.AddToRoleAsync(user, nameof(AddUserViewModel.RoleName));
+                    await _userManager.AddToRoleAsync(user, AddUserViewModel.RoleName);
                 }
                 else
                 {
@@ -132,16 +132,16 @@ namespace MilkUp.ViewModels
 
             try
             {
-                var result = await _userManager.CreateAsync(user, "RazDwaTrzy123");
-                if (result.Succeeded)
-                {
-                    //wartość domyślna - czy tak ma być?
-                    await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.SuperUser));
-                }
-                else
-                {
+                //var result = await _userManager.CreateAsync(user, "RazDwaTrzy123");
+                //if (result.Succeeded)
+                //{
+                //    //wartość domyślna - czy tak ma być?
+                //    await _userManager.AddToRoleAsync(user, nameof(EAspNetRole.SuperUser));
+                //}
+                //else
+                //{
 
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -169,5 +169,31 @@ namespace MilkUp.ViewModels
         }
         #endregion
 
+        #region AddCompany
+        public AddCompanyViewModel AddCompanyViewModel { get; set; }
+
+        public async Task InitializeAddCompany()
+        {
+            AddCompanyViewModel = new AddCompanyViewModel();
+        }
+        public async Task CancelAddCompany()
+        {
+            AddCompanyViewModel = null;
+        }
+        public async Task AddCompany()
+        {
+            var companyToAdd = new Company()
+            {
+                Name = AddCompanyViewModel.Name                
+            };
+
+            _companyRepository.Insert(companyToAdd);
+            _companyRepository.Save();
+
+            AddCompanyViewModel = null;
+            InitializeViewModel();
+        }
+
+        #endregion
     }
 }

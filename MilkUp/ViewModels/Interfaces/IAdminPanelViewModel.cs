@@ -16,6 +16,16 @@ namespace MilkUp.ViewModels.Interfaces
         AddUserViewModel AddUserViewModel { get; set; }
         Task InitializeAddUser();
         Task CancelAddUser();
-        Task AddNewUser();
+        Task AddUser();
+
+        AddFarmViewModel AddFarmViewModel { get; set; }
+        Task InitializeAddFarm();
+        Task CancelAddFarm();
+        Task AddFarm();
+
+        AddCowGroupViewModel AddCowGroupViewModel { get; set; }
+        Task InitializeAddCowGroup();
+        Task CancelAddCowGroup();
+        Task AddCowGroup();
     }
 }

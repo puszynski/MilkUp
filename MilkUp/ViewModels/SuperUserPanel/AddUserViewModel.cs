@@ -14,6 +14,6 @@ namespace MilkUp.ViewModels.SuperUserPanel
         public string CompanyID { get; set; }
 
         [Required]
-        public int RoleName { get; set; }
+        public string RoleName { get; set; }
     }
 }
