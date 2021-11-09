@@ -11,6 +11,7 @@ using MilkUp.Data;
 using MilkUp.Models;
 using MilkUp.Repositories;
 using MilkUp.Repositories.Interfaces;
+using MilkUp.Services;
 using MilkUp.ViewModels;
 using MilkUp.ViewModels.Interfaces;
 
@@ -65,6 +66,8 @@ namespace MilkUp
             services.AddScoped<ILactationRepository, LactationRepository>();
             services.AddScoped<ICowGroupRepository, CowGroupRepository>();
             services.AddScoped<IFarmRepository, FarmRepository>();
+
+            services.AddScoped<ApplicationStateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline/ add middleweare - stuff between requests.

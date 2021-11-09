@@ -1,0 +1,36 @@
+﻿@using MilkUp.Services
+@inject ApplicationStateService applicationStateService
+@implements IDisposable
+
+@foreach (var item in applicationStateService.Notifications)
+{
+    <p>@item.Massage @item.MessageType.ToString()</p>
+    <button @onclick="() => Close(item)">todo close</button>
+}
+
+@code {
+
+    void Close(NotificationViewModel notificationViewModel)
+    {
+        applicationStateService.CloseNotification(this, notificationViewModel);
+    }
+
+    private async Task AppState_StateChanged(ComponentBase componentBase, string property)
+    {
+        if(componentBase != this)
+        {
+            //inspect property to determine is action needs to be taken
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        applicationStateService.StateChanged += async (Source, Property) => await AppState_StateChanged(Source, Property);
+    }
+
+    void IDisposable.Dispose()
+    {
+        applicationStateService.StateChanged -= async (Source, Property) => await AppState_StateChanged(Source, Property);
+    }
+}

@@ -124,13 +124,21 @@ namespace MilkUp.ViewModels
         }
         public async Task AddCowGroup()
         {
-            if (_userCompanyID.HasValue)
+            if (!_userCompanyID.HasValue)
                 throw new NotImplementedException();
 
             var groupToAdd = new CowGroup() { Name = AddCowGroupViewModel.Name, CompanyID = _userCompanyID.Value };
             _cowGroupRepository.Insert(groupToAdd);
-            AddCowGroupViewModel = null;
-            InitializeViewModel();
+            try
+            {
+                _cowGroupRepository.Save();
+                AddCowGroupViewModel = null;
+                InitializeViewModel();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }            
         }
         #endregion
 
@@ -146,14 +154,22 @@ namespace MilkUp.ViewModels
         }
         public async Task AddFarm()
         {
-            if (_userCompanyID.HasValue)
+            if (!_userCompanyID.HasValue)
                 throw new NotImplementedException();
 
-            var farmToAdd = new Farm() { Name = AddCowGroupViewModel.Name, CompanyID = _userCompanyID.Value };
+            var farmToAdd = new Farm() { Name = AddFarmViewModel.Name, CompanyID = _userCompanyID.Value };
             _farmRepository.Insert(farmToAdd);
 
-            AddFarmViewModel = null;
-            InitializeViewModel();
+            try
+            {
+                _farmRepository.Save();
+                AddFarmViewModel = null;
+                InitializeViewModel();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
     }

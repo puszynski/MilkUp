@@ -35,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
     <Folder Include="ViewModels\Shared\" />
     <Folder Include="wwwroot\css\bootstrap\" />
     <Folder Include="wwwroot\js\" />
