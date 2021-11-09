@@ -82,13 +82,13 @@
                     <p>Laktacja nr. @(lactations.index + 1) </p>
 
                 <div class="row">
-                    <div class="col-6">                      
+                    <div class="col col-lg-6">                      
                         <div class="form-floating">
                             <InputDate type="date" class="form-control" placeholder="hack" @bind-Value="lactations.value.From" />
                             <label>Data rozpoczęcia laktacji</label>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col col-lg-6">
                           <div class="form-floating">
                             <InputDate type="date" class="form-control" placeholder="hack" @bind-Value="lactations.value.To" />
                             <label>Data ukończenia laktacji</label>
@@ -96,7 +96,7 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-6">
+                    <div class="col col-lg-6">
                           <div class="form-floating">
                             <InputNumber type="number" class="form-control" placeholder="hack" @bind-Value="lactations.value.LitersCollected" />
                             <label>Liczba zebranych litrów mleka</label>
