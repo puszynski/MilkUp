@@ -10,7 +10,7 @@ namespace MilkUp.ViewModels.Cows
         //[Range(typeof(bool), "true", "true", ErrorMessage = "Wybierz tak lub nie")]
         public bool IsFarmBorn { get; set; } = true;
 
-        [Required]
+        [Required(ErrorMessage = "wymagane")]
         public int? NameOnFarm { get; set; }
 
         [Required]

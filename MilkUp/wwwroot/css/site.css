@@ -28,3 +28,12 @@ body {
 .form-floating {
     margin: 1rem;
 }
+
+.validation-message {
+    display: inline;
+    color: red;
+}
+
+.form-control.invalid {
+    border: 1px solid red;
+}
