@@ -26,14 +26,15 @@ body {
 }
 
 .form-floating {
-    margin: 1rem;
+    margin: 0.1rem;
 }
 
 .validation-message {
     display: inline;
     color: red;
+    font-size: 0.7rem;
 }
 
-.form-control.invalid {
+.form-control.invalid, .form-select.invalid {
     border: 1px solid red;
 }

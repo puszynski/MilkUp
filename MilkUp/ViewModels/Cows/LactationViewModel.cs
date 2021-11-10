@@ -5,10 +5,13 @@ namespace MilkUp.ViewModels.Cows
 {
     public class LactationViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Pole wymagane")]
         public DateTime? From { get; set; }
+
+        [Required(ErrorMessage = "Pole wymagane")]
         public DateTime? To { get; set; }
 
+        [Required(ErrorMessage = "Pole wymagane")]
         public int? LitersCollected { get; set; }
     }
 }

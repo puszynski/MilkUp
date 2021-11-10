@@ -33,9 +33,8 @@
                 <div class="col col-lg-6">                      
                     <div class="form-floating">
                         <InputNumber type="number" class="form-control is-invalid" placeholder="hack" @bind-Value="CowsVM.AddCowViewModel.NameOnFarm" />
-                        <label>ID</label>
-                    </div>
-                        <ValidationMessage For="@(() => CowsVM.AddCowViewModel.NameOnFarm)" />
+                        <label>ID <ValidationMessage For="@(() => CowsVM.AddCowViewModel.NameOnFarm)" /></label>
+                    </div>                        
                 </div>
                 <div class="col col-lg-6">
                     <div class="form-floating">
@@ -48,39 +47,48 @@
             <div class="row">
                 <div class="col col-lg-6">  
                     <div class="form-floating">
-                        <InputNumber type="number" class="form-control" placeholder="hack" @bind-Value="CowsVM.AddCowViewModel.TransponderNumber" />
-                        <label>Numer transpordera</label>
+                        <InputNumber type="number" class="form-control form-control-sm" placeholder="hack" @bind-Value="CowsVM.AddCowViewModel.TransponderNumber" />
+                        <label>Numer transpondera <ValidationMessage For="@(() => CowsVM.AddCowViewModel.TransponderNumber)" /></label>
                     </div>
                 </div>
                 <div class="col col-lg-6">
                     <div class="form-floating">
-                        <InputDate type="date" class="form-control" placeholder="hack" @bind-Value="CowsVM.AddCowViewModel.BirthDate" />
-                        <label>Data urodzenia</label>
+                        <InputDate type="date" class="form-control form-control-sm" placeholder="hack" @bind-Value="CowsVM.AddCowViewModel.BirthDate" />
+                        <label>Data urodzenia <ValidationMessage For="@(() => CowsVM.AddCowViewModel.BirthDate)" /></label>
                     </div>
                 </div>
             </div>
 
-            <div class="form-floating">
-                <InputSelect class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind-Value="CowsVM.AddCowViewModel.FarmID">
-                    <option value="">Wybierz farme</option>
-                    @foreach (var farm in CowsVM.Farms)
-                        {
-                        <option value="@farm.FarmID">@farm.FarmName</option>
-                        }
-                </InputSelect>
-                <label for="floatingSelect">Farma</label>
+            <div class="row">
+                <div class="col col-lg-6">  
+                    <div class="form-floating">
+                        <InputSelect class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind-Value="CowsVM.AddCowViewModel.FarmID">
+                            <option value="">Wybierz farme</option>
+                            @foreach (var farm in CowsVM.Farms)
+                                {
+                                <option value="@farm.FarmID">@farm.FarmName</option>
+                                }
+                        </InputSelect>
+                        <label for="floatingSelect">Farma <ValidationMessage For="@(() => CowsVM.AddCowViewModel.FarmID)" /></label>
+                    </div>
+                </div>
+                <div class="col col-lg-6">
+                    <div class="form-floating">
+                        <InputSelect class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind-Value="CowsVM.AddCowViewModel.CowGroupID">
+                            <option value="">Przypisz do grupy</option>
+                            @foreach (var group in CowsVM.CowGroups)
+                                {
+                                <option value="@group.ID">@group.Name</option>
+                                }
+                        </InputSelect>
+                        <label for="floatingSelect">Grupa <ValidationMessage For="@(() => CowsVM.AddCowViewModel.CowGroupID)" /></label>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-floating">
-                <InputSelect class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind-Value="CowsVM.AddCowViewModel.CowGroupID">
-                    <option value="">Przypisz do grupy</option>
-                    @foreach (var group in CowsVM.CowGroups)
-                        {
-                        <option value="@group.ID">@group.Name</option>
-                        }
-                </InputSelect>
-                <label for="floatingSelect">Grupa</label>
-            </div>
+            
+
+
 
             @*WAŻNE!! jeśli chcesz dodać dodatkowy button wewnątrz form który ma uruchomić inną metoda niż submit - musi być Type="button" inaczej będzie go traktować jako submit *@
             <h4>Laktacje</h4><button Type="button" class="btn btn-secondary btn-sm" @onclick="CowsVM.AddNewCowNewLactation">Dodaj laktacje</button>
@@ -94,13 +102,13 @@
                     <div class="col col-lg-6">                      
                         <div class="form-floating">
                             <InputDate type="date" class="form-control" placeholder="hack" @bind-Value="lactations.value.From" />
-                            <label>Rozpoczęcie laktacji</label>
+                            <label>Rozpoczęcie laktacji <ValidationMessage For="@(() => lactations.value.From)" /></label>
                         </div>
                     </div>
                     <div class="col col-lg-6">
                           <div class="form-floating">
                             <InputDate type="date" class="form-control" placeholder="hack" @bind-Value="lactations.value.To" />
-                            <label>Ukończenie laktacji</label>
+                            <label>Ukończenie laktacji <ValidationMessage For="@(() => lactations.value.To)" /></label>
                         </div>
                     </div>
                   </div>
@@ -108,7 +116,7 @@
                     <div class="col col-lg-6">
                           <div class="form-floating">
                             <InputNumber type="number" class="form-control" placeholder="hack" @bind-Value="lactations.value.LitersCollected" />
-                            <label>Zebranych litrów</label>
+                            <label>Zebranych litrów <ValidationMessage For="@(() => lactations.value.LitersCollected)" /></label>
                         </div>
                     </div>
                   </div>
