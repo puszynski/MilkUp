@@ -31,10 +31,10 @@ body {
 
 .validation-message {
     display: inline;
-    color: red;
+    color: darkred;
     font-size: 0.7rem;
 }
 
 .form-control.invalid, .form-select.invalid {
-    border: 1px solid red;
+    border: 1px solid darkred;
 }

@@ -16,6 +16,7 @@ namespace MilkUp.ViewModels.Interfaces
 
         string SearchFilter { get; set; }
 
+        Task InitializeViewModel();
         Task InitializeNewCowForm();
         Task CancelAddCowForm();
         Task AddNewCowNewLactation();

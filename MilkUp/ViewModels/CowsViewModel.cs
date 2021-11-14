@@ -111,7 +111,7 @@ namespace MilkUp.ViewModels
             {
                 NameOnFarm = AddCowViewModel.NameOnFarm.Value,
                 EarringNumber = AddCowViewModel.EarringNumber.Value,
-                TransponderNumber = AddCowViewModel.TransponderNumber.Value,
+                TransponderNumber = AddCowViewModel.TransponderNumber,
                 BirthDate = AddCowViewModel.BirthDate.Value,
                 FarmID = int.Parse(AddCowViewModel.FarmID),
                 CowGroupID = int.Parse(AddCowViewModel.CowGroupID),

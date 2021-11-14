@@ -8,7 +8,7 @@ namespace MilkUp.Models
     {        
         public int NameOnFarm { get; set; }//ID used on farm
         public int EarringNumber { get; set; }//Reg1 – to numer kolczyka nadawany jest zaraz po urodzeniu (Ryc. 3).
-        public int TransponderNumber { get; set; }
+        public string TransponderNumber { get; set; }
         //public int AllProID { get; set; }//numer transpondera który pozwala programowi AllPro na identyfikację zwierzęcia oraz zapisanie danych dotyczących doju
 
         public int FarmID { get; set; }

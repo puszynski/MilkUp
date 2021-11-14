@@ -7,7 +7,7 @@ namespace MilkUp.ViewModels.Cows
     public class AddCowViewModel
     {
         [Required]
-        //[Range(typeof(bool), "true", "true", ErrorMessage = "Wybierz tak lub nie")]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Wybierz tak lub nie")]
         public bool IsFarmBorn { get; set; } = true;
 
         [Required(ErrorMessage = "Pole wymagane")]
@@ -25,7 +25,8 @@ namespace MilkUp.ViewModels.Cows
         public int? EarringNumber { get; set; }
 
         [Required(ErrorMessage = "Pole wymagane")]
-        public int? TransponderNumber { get; set; }
+        [RegularExpression(@"^[A-Za-z]{2}[0-9]{12}", ErrorMessage = "Pole transpondera musi składać sie z 2 liter oraz 12 cyfr")]
+        public string TransponderNumber { get; set; }
 
         [Required(ErrorMessage = "Pole wymagane")]
         public DateTime? BirthDate { get; set; }

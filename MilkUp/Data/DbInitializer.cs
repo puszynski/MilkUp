@@ -67,12 +67,12 @@ namespace MilkUp.Data
 
             context.Bulls.Add(bull);
 
-            var cow1 = new Cow() { NameOnFarm = 2001, EarringNumber = 221, TransponderNumber = 123, Farm = farm1, ParentCowID = null, IsMale = false, BirthDate = new DateTime(2020, 01, 27), Lactations = lactations, CowGroupID = 1, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, CompanyID = 1 };
+            var cow1 = new Cow() { NameOnFarm = 2001, EarringNumber = 221, TransponderNumber = "AB123456789111", Farm = farm1, ParentCowID = null, IsMale = false, BirthDate = new DateTime(2020, 01, 27), Lactations = lactations, CowGroupID = 1, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, CompanyID = 1 };
 
 
-            var cow2 = new Cow() { NameOnFarm = 2002, EarringNumber = 222, TransponderNumber = 124, Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = false, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, CompanyID = 1 };
+            var cow2 = new Cow() { NameOnFarm = 2002, EarringNumber = 222, TransponderNumber = "AB123456789111", Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = false, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, CompanyID = 1 };
 
-            var cow3 = new Cow() { NameOnFarm = 2003, EarringNumber = 223, TransponderNumber = 125, Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = true, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, CompanyID = 1 };
+            var cow3 = new Cow() { NameOnFarm = 2003, EarringNumber = 223, TransponderNumber = "AB123456789111", Farm = farm1, ParentCowID = 1, ParentBullID = 1, IsMale = true, BirthDate = new DateTime(2021, 10, 1), Lactations = null, CowGroupID = 2, DateAdded = DateTime.UtcNow, DateUpdated = DateTime.UtcNow, CompanyID = 1 };
 
             context.Cows.Add(cow1);
             context.Cows.Add(cow2);
