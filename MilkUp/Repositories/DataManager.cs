@@ -45,9 +45,9 @@ namespace MilkUp.Repositories
 
         public async virtual Task Delete(int id)
         {
-            var entityToDelete = _dbSet.FindAsync(id);
-            entityToDelete.Result.DateDeleted = DateTime.UtcNow;
-            await Update(entityToDelete.Result);
+            var entityToDelete = await _dbSet.FindAsync(id);
+            entityToDelete.DateDeleted = DateTime.UtcNow;
+            await Update(entityToDelete);
         }
 
         public async virtual Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, 
@@ -108,6 +108,25 @@ namespace MilkUp.Repositories
             {
                 var msg = ex.Message;
                 return null;
+            }
+        }
+
+        public async virtual Task<bool> Any(Expression<Func<TEntity, bool>> filter = null)
+        {
+            try
+            {
+                IQueryable<TEntity> query = _dbSet.Where(x => !x.DateDeleted.HasValue);
+
+                if (filter != null)
+                    query = query.Where(filter);
+
+                return query.Any();
+                
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
+                return false;
             }
         }
 

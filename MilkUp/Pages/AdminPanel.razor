@@ -2,6 +2,45 @@
 @attribute [Authorize(Roles = "Admin, SuperUser")]
 @inject IAdminPanelViewModel _VM
 
+@*todo jako komponent po interfejsie*@
+@if (_VM.Notifications != null && _VM.Notifications.Any())
+{
+    foreach (var notification in _VM.Notifications)
+    {
+        switch (notification.NotificationType)
+        {
+            case ENotificationType.Success:
+                <text>
+                    <div class="alert alert-success" role="alert">
+                        @notification.Message
+                    </div>
+                </text>
+                break;
+            case ENotificationType.Validation:
+                <text>
+                    <div class="alert alert-warning" role="alert">
+                        @notification.Message
+                    </div>
+                </text>
+                break;
+            case ENotificationType.Error:
+                <text>
+                    <div class="alert alert-danger" role="alert">
+                        @notification.Message
+                    </div>
+                </text>
+                break;
+            default:
+                <text>
+                    <div class="alert alert-danger" role="alert">
+                        @notification.Message
+                    </div>
+                </text>
+                break;
+        }        
+    }
+}
+
 <h1>Panel zarządzania</h1>
 <p>Z tego miejsca odbywać się będzie zarządzanie użytkownikami w obrębie firmy jeśli masz role administratora</p>
 
@@ -93,6 +132,7 @@
                 <th scope="col">nazwa</th>
                 <th scope="col">numer identyfikacyjny</th>
                 <th scope="col">utworzono</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -102,6 +142,7 @@
                     <th scope="row"> @farmViewModel.Name </th>
                     <td> @farmViewModel.ID </td>
                     <td> @farmViewModel.DateAdded </td>
+                    <td> <button class="btn btn-danger btn-sm" @onclick="() => _VM.RemoveFarm(farmViewModel.ID)">Usuń</button> </td>
                 </tr>
             }
         </tbody>
@@ -141,6 +182,7 @@
             <tr>
                 <th scope="col">nazwa</th>
                 <th scope="col">numer identyfikacyjny</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -149,6 +191,7 @@
                 <tr class="bg-hover-white-smoke w-100 pointer">
                     <th scope="row"> @cowGroupViewModel.Name </th>
                     <td> @cowGroupViewModel.ID </td>
+                    <td> <button class="btn btn-danger btn-sm" @onclick="() => _VM.RemoveCowGroup(cowGroupViewModel.ID)">Usuń</button> </td>
                 </tr>
             }
         </tbody>

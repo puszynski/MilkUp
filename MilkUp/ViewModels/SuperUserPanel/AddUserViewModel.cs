@@ -10,10 +10,10 @@ namespace MilkUp.ViewModels.SuperUserPanel
         [Required]
         public string Password { get; set; }
 
-        [Required]
+        //[Required] for superAdmin
         public string CompanyID { get; set; }
 
-        [Required]
+        //[Required] for superAdmin
         public string RoleName { get; set; }
     }
 }

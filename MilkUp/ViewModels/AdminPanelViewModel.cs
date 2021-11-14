@@ -6,6 +6,7 @@ using MilkUp.Models;
 using MilkUp.Repositories.Interfaces;
 using MilkUp.ViewModels.AdminPanel;
 using MilkUp.ViewModels.Interfaces;
+using MilkUp.ViewModels.Shared;
 using MilkUp.ViewModels.SuperUserPanel;
 using System;
 using System.Collections.Generic;
@@ -17,18 +18,21 @@ namespace MilkUp.ViewModels
     public class AdminPanelViewModel : BaseViewModel, IAdminPanelViewModel
     {
         readonly ICowGroupRepository _cowGroupRepository;
+        readonly ICowRepository _cowRepository;
         readonly IFarmRepository _farmRepository;
 
         public AdminPanelViewModel(ApplicationDbContext applicationDbContext,
                                    UserManager<ApplicationUser> userManager,
                                    AuthenticationStateProvider authenticationStateProvider,
                                    ICowGroupRepository cowGroupRepository,
+                                   ICowRepository cowRepository,
                                    IFarmRepository farmRepository)
             : base(authenticationStateProvider,
                   applicationDbContext,
                   userManager)
         {
             _cowGroupRepository = cowGroupRepository;
+            _cowRepository = cowRepository;
             _farmRepository = farmRepository;
             InitializeViewModel();
         }
@@ -94,6 +98,8 @@ namespace MilkUp.ViewModels
             try
             {
                 var result = await _userManager.CreateAsync(user, AddUserViewModel.Password);
+                //HARDCODED! ID of regular role
+                UsersViewModels.Add(new UserViewModel() { CompanyID = _userCompanyID.Value, Email = AddUserViewModel.Email, Roles = "ae8ad018-abf8-4723-b5b1-353d4ba77230" });
                 if (result.Succeeded)
                 {
                     //wartość domyślna - czy tak ma być?
@@ -132,13 +138,43 @@ namespace MilkUp.ViewModels
             try
             {
                 _cowGroupRepository.Save();
+                CowGroupsViewModels.Add(new CowGroupsViewModel() { Name = AddCowGroupViewModel.Name });
                 AddCowGroupViewModel = null;
-                InitializeViewModel();
+
+                InitializeViewModel();//nie działa, tzn nie ma po przeładowaniu
+                //StateHasChanged
             }
             catch (Exception ex)
             {
                 throw ex;
             }            
+        }
+        #endregion
+
+        #region Delete cow group
+        public async Task RemoveCowGroup(int groupID)
+        {
+            //todo walidacja czy nie jest przypięta
+            if (await _cowRepository.Any(x => x.CowGroupID == groupID))
+            {
+                Notifications.Add(new NotificationViewModel()
+                {
+                    Message = "Nie można usunąć, do grupy są przypisane krowy. Przypisz je do innej grupy.",
+                    NotificationType = ENotificationType.Validation
+                });
+
+                return;
+            }
+
+            try
+            {
+                await _cowGroupRepository.Delete(groupID);
+                CowGroupsViewModels.Remove(CowGroupsViewModels.Single(x => x.ID == groupID));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
 
@@ -163,13 +199,41 @@ namespace MilkUp.ViewModels
             try
             {
                 _farmRepository.Save();
+                FarmsViewModels.Add(new FarmViewModel() { Name = AddFarmViewModel.Name });
                 AddFarmViewModel = null;
-                InitializeViewModel();
+                
+                InitializeViewModel();//nie działa, tzn nie ma po przeładowaniu
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+        #endregion
+
+        #region Delete farm
+        public async Task RemoveFarm(int farmID)
+        {
+            if (await _cowRepository.Any(x => x.FarmID == farmID))
+            {
+                Notifications.Add(new NotificationViewModel() 
+                { 
+                    Message = "Nie można usunąć, do farmy są przypisane krowy. Przypisz je do innej farmy.", 
+                    NotificationType = ENotificationType.Validation 
+                });
+
+                return;
+            }
+
+            try
+            {
+                await _farmRepository.Delete(farmID);
+                FarmsViewModels.Remove(FarmsViewModels.Single(x => x.ID == farmID));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }            
         }
         #endregion
     }

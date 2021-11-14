@@ -35,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Shared\" />
     <Folder Include="wwwroot\css\bootstrap\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\bootstrap-icons\" />
