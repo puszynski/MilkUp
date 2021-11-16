@@ -2,44 +2,6 @@
 @attribute [Authorize(Roles = "Admin, SuperUser")]
 @inject IAdminPanelViewModel _VM
 
-@*todo jako komponent po interfejsie*@
-@if (_VM.Notifications != null && _VM.Notifications.Any())
-{
-    foreach (var notification in _VM.Notifications)
-    {
-        switch (notification.NotificationType)
-        {
-            case ENotificationType.Success:
-                <text>
-                    <div class="alert alert-success" role="alert">
-                        @notification.Message
-                    </div>
-                </text>
-                break;
-            case ENotificationType.Validation:
-                <text>
-                    <div class="alert alert-warning" role="alert">
-                        @notification.Message
-                    </div>
-                </text>
-                break;
-            case ENotificationType.Error:
-                <text>
-                    <div class="alert alert-danger" role="alert">
-                        @notification.Message
-                    </div>
-                </text>
-                break;
-            default:
-                <text>
-                    <div class="alert alert-danger" role="alert">
-                        @notification.Message
-                    </div>
-                </text>
-                break;
-        }        
-    }
-}
 
 <h1>Panel zarządzania</h1>
 <p>Z tego miejsca odbywać się będzie zarządzanie użytkownikami w obrębie firmy jeśli masz role administratora</p>

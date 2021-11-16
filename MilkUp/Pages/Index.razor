@@ -1,6 +1,9 @@
 ﻿@page "/"
 @using Microsoft.Extensions.Configuration
+@using MilkUp.Services
+@using MilkUp.ViewModels.Shared
 @inject IConfiguration configuration
+@inject ApplicationStateService applicationStateService
 
 <h5>V 0.091</h5>
 
@@ -26,7 +29,7 @@ Welcome to your new app.
   </div>
 </div>
 
-
+<button class="btn btn-danger btn-sm" @onclick="() => applicationStateService.AddNotification(new NotificationViewModel(){ Message = test, NotificationType = ENotificationType.Success })">Dodaj pustą informacje</button>
 
 <div class="form-group">
     <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -44,3 +47,7 @@ Welcome to your new app.
     Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
   </div>
 </div>
+
+@code {
+    string test = "koko";
+}

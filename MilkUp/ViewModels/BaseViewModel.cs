@@ -2,15 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using MilkUp.Data;
 using MilkUp.Models;
-using MilkUp.ViewModels.Interfaces;
-using MilkUp.ViewModels.Shared;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
 namespace MilkUp.ViewModels
 {
-    public class BaseViewModel : INotification
+    public class BaseViewModel
     {
         public readonly AuthenticationStateProvider _authenticationStateProvider;
         public readonly ApplicationDbContext _applicationDbContext;
@@ -19,8 +16,6 @@ namespace MilkUp.ViewModels
         public ApplicationUser _user;
         public int? _userCompanyID;
 
-        public List<NotificationViewModel> Notifications { get; set; }
-
         public BaseViewModel(AuthenticationStateProvider authenticationStateProvider,
                              ApplicationDbContext applicationDbContext,
                              UserManager<ApplicationUser> userManager)
@@ -28,8 +23,6 @@ namespace MilkUp.ViewModels
             _authenticationStateProvider = authenticationStateProvider;
             _applicationDbContext = applicationDbContext;
             _userManager = userManager;
-
-            Notifications = new List<NotificationViewModel>();
 
             SetUserCompanyID();
         }

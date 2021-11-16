@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MilkUp.ViewModels.Interfaces
 {
-    public interface IAdminPanelViewModel : INotification
+    public interface IAdminPanelViewModel
     {
-        List<NotificationViewModel> Notifications { get; set; }
         List<UserViewModel> UsersViewModels { get; set; }
         List<FarmViewModel> FarmsViewModels { get; set; }
         List<CowGroupsViewModel> CowGroupsViewModels { get; set; }

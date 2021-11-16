@@ -1,0 +1,72 @@
+﻿@using MilkUp.Services
+@using MilkUp.ViewModels.Shared
+@inject ApplicationStateService applicationStateService
+@implements IDisposable
+
+@if (applicationStateService.Notifications != null && applicationStateService.Notifications.Any())
+{
+    foreach (var notification in applicationStateService.Notifications)
+    {
+        switch (notification.NotificationType)
+        {
+            case ENotificationType.Success:
+                <text>
+                    <div class="alert alert-success" role="alert">
+                        @notification.Message
+                        <button @onclick="() => Close(notification)">close</button>
+                    </div>
+                </text>
+                break;
+            case ENotificationType.Validation:
+                <text>
+                    <div class="alert alert-warning" role="alert">
+                        @notification.Message
+                        <button @onclick="() => Close(notification)">close</button>
+                    </div>
+                </text>
+                break;
+            case ENotificationType.Error:
+                <text>
+                    <div class="alert alert-danger" role="alert">
+                        @notification.Message
+                        <button @onclick="() => Close(notification)">close</button>
+                    </div>
+                </text>
+                break;
+            default:
+                <text>
+                    <div class="alert alert-danger" role="alert">
+                        @notification.Message
+                        <button @onclick="() => Close(notification)">close</button>
+                    </div>
+                </text>
+                break;
+        }        
+    }
+}
+
+@code {
+    void Close(NotificationViewModel notificationViewModel)
+    {
+        applicationStateService.CloseNotification(this, notificationViewModel);
+    }
+
+    private async Task AppState_StateChanged(ComponentBase componentBase, string property)
+    {
+        if (componentBase != this)
+        {
+            //inspect property to determine is action needs to be taken
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        applicationStateService.StateChanged += StateHasChanged;
+    }
+
+    void IDisposable.Dispose()
+    {
+        applicationStateService.StateChanged -= StateHasChanged;
+    }
+}

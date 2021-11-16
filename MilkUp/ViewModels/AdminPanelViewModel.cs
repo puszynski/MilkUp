@@ -4,6 +4,7 @@ using MilkUp.Data;
 using MilkUp.Enums;
 using MilkUp.Models;
 using MilkUp.Repositories.Interfaces;
+using MilkUp.Services;
 using MilkUp.ViewModels.AdminPanel;
 using MilkUp.ViewModels.Interfaces;
 using MilkUp.ViewModels.Shared;
@@ -20,13 +21,15 @@ namespace MilkUp.ViewModels
         readonly ICowGroupRepository _cowGroupRepository;
         readonly ICowRepository _cowRepository;
         readonly IFarmRepository _farmRepository;
+        readonly ApplicationStateService _applicationStateService;
 
         public AdminPanelViewModel(ApplicationDbContext applicationDbContext,
                                    UserManager<ApplicationUser> userManager,
                                    AuthenticationStateProvider authenticationStateProvider,
                                    ICowGroupRepository cowGroupRepository,
                                    ICowRepository cowRepository,
-                                   IFarmRepository farmRepository)
+                                   IFarmRepository farmRepository,
+                                   ApplicationStateService applicationStateService)
             : base(authenticationStateProvider,
                   applicationDbContext,
                   userManager)
@@ -34,6 +37,7 @@ namespace MilkUp.ViewModels
             _cowGroupRepository = cowGroupRepository;
             _cowRepository = cowRepository;
             _farmRepository = farmRepository;
+            _applicationStateService = applicationStateService;
             InitializeViewModel();
         }
 
@@ -154,15 +158,13 @@ namespace MilkUp.ViewModels
         #region Delete cow group
         public async Task RemoveCowGroup(int groupID)
         {
-            //todo walidacja czy nie jest przypięta
             if (await _cowRepository.Any(x => x.CowGroupID == groupID))
             {
-                Notifications.Add(new NotificationViewModel()
+                _applicationStateService.AddNotification(new NotificationViewModel()
                 {
                     Message = "Nie można usunąć, do grupy są przypisane krowy. Przypisz je do innej grupy.",
                     NotificationType = ENotificationType.Validation
                 });
-
                 return;
             }
 
@@ -216,12 +218,11 @@ namespace MilkUp.ViewModels
         {
             if (await _cowRepository.Any(x => x.FarmID == farmID))
             {
-                Notifications.Add(new NotificationViewModel() 
-                { 
-                    Message = "Nie można usunąć, do farmy są przypisane krowy. Przypisz je do innej farmy.", 
-                    NotificationType = ENotificationType.Validation 
-                });
-
+                _applicationStateService.AddNotification(new NotificationViewModel()
+                    {
+                        Message = "Nie można usunąć, do farmy są przypisane krowy. Przypisz je do innej farmy.",
+                        NotificationType = ENotificationType.Validation
+                    });
                 return;
             }
 
