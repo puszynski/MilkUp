@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MilkUp.Enums;
 using MilkUp.ViewModels.Shared;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,9 @@ namespace MilkUp.Services
     public class ApplicationStateService
     {
         public List<NotificationViewModel> Notifications { get; private set; } = new List<NotificationViewModel>();
+
+        public void AddNotification(string message, ENotificationType notificationType) 
+            => AddNotification(new NotificationViewModel() { Message = message, NotificationType = notificationType });
 
         public void AddNotification(NotificationViewModel notification)
         {

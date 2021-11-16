@@ -60,6 +60,7 @@ namespace MilkUp
             services.AddScoped<ISuperUserPanelViewModel, SuperUserPanelViewModel>();
             services.AddScoped<ISignInViewModel, SignInViewModel>();
             services.AddScoped<IAdminPanelViewModel, AdminPanelViewModel>();
+            services.AddScoped<IAddCowViewModel, AddCowViewModel>();
 
             services.AddScoped<ICowRepository, CowRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();

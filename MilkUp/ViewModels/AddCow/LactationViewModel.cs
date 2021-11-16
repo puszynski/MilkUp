@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace MilkUp.ViewModels.Cows
+namespace MilkUp.ViewModels.AddCow
 {
     public class LactationViewModel
     {
