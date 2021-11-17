@@ -5,7 +5,7 @@
 
 @if (AddCowVM != null)
 {
-    <div class="alert alert-secondary mt-4" role="alert">
+
         <h1>Dodaj krowe</h1>
         <EditForm Model="@AddCowVM" OnValidSubmit="@AddCowVM.AddNewCow">
             <DataAnnotationsValidator />
@@ -112,7 +112,6 @@
             }
 
             <button type="submit" class="btn btn-secondary btn-sm">Zapisz</button>
-            <button class="btn btn-secondary btn-sm" @*@onclick="CowsVM.CancelAddCowForm"*@>Anuluj (todo backURL)</button>
+            <a href="/cows" type="button" class="btn btn-secondary btn-sm">Anuluj</a>
         </EditForm>
-    </div>
 }
