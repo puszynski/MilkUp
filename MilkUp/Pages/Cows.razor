@@ -2,8 +2,7 @@
 @page "/krowy"
 @page "/cows/{SelectedCowID:int}"
 @attribute [Authorize]
-
-@inject ICowsViewModel CowsVM
+@inject ICowsViewModel _VM
 
 
 
@@ -14,7 +13,7 @@
     <a href="/addcow" type="button" class="btn btn-secondary btn-sm">Dodaj</a>
 </div>
 
-@if (CowsVM.CowList == null)
+@if (_VM.CowList == null)
 {
     <div class="text-center">
         <div class="spinner-border" role="status">
@@ -22,11 +21,11 @@
         </div>
     </div>
 }
-@if (CowsVM.CowList != null)
+@if (_VM.CowList != null)
 {
     <p>Filter:</p>
     <br />
-    <input @bind="CowsVM.SearchFilter" @bind:event="oninput" />
+    <input @bind="_VM.SearchFilter" @bind:event="oninput" />
 
     <table class="table table-hover table-sm">
         <thead>
@@ -36,10 +35,11 @@
                 <th scope="col">ID farmy </th>
                 <th scope="col">ID matki</th>
                 <th scope="col">Wiek w dniach</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var cow in CowsVM.CowList)
+            @foreach (var cow in _VM.CowList)
             {
                 <tr class="bg-hover-white-smoke w-100 pointer" @onclick="() => OnClickTest(cow.ID)">
                     <th scope="row"> @cow.NameOnFarm </th>
@@ -47,6 +47,7 @@
                     <td> @cow.FarmID </td>
                     <td> @cow.ParentID </td>
                     <td> @cow.AgeDisplay </td>
+                    <td> <button class="btn btn-danger btn-sm" @onclick="() => _VM.DeleteCow(cow.ID)">Usuń</button> </td>
                 </tr>
             }
 
@@ -65,9 +66,9 @@
         </ul>
     </nav>
 }
-@if (CowsVM.SelectedCowViewModel != null)
+@if (_VM.SelectedCowViewModel != null)
 {
-    <p>Krowie detale: @CowsVM.SelectedCowViewModel.ID, @CowsVM.SelectedCowViewModel.FarmName, @CowsVM.SelectedCowViewModel.IsFemale, @CowsVM.SelectedCowViewModel.LactationCount, ... </p>
+    <p>Krowie detale: @_VM.SelectedCowViewModel.ID, @_VM.SelectedCowViewModel.FarmName, @_VM.SelectedCowViewModel.IsFemale, @_VM.SelectedCowViewModel.LactationCount, ... </p>
 }
 
 @code {
@@ -80,6 +81,9 @@
     }
 
 
+    
+
+
     public override Task SetParametersAsync(ParameterView parameters)
     {
         //called as first method called when page load, before parameters are set, it happends each time we set params (not once like init)
@@ -89,8 +93,7 @@
     protected override Task OnInitializedAsync()
     {
         //called second, after parameters are set, only once when page is initialized
-
-        CowsVM.InitializeViewModel();//DUPA BUG nie odświeża wyniku po przekierowaniu
+        _VM.InitializeViewModel();//DUPA BUG nie odświeża wyniku po przekierowaniu
         StateHasChanged();
         return base.OnInitializedAsync();
     }

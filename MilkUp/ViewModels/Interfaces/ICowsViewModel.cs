@@ -1,4 +1,5 @@
 ﻿using MilkUp.ViewModels.Cows;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,5 +14,7 @@ namespace MilkUp.ViewModels.Interfaces
 
         Task InitializeViewModel();        
         Task DisplaySelectedCowViewModel(int cowID);
+
+        Task DeleteCow(int cowID);
     }
 }

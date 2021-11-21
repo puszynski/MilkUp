@@ -1,6 +1,8 @@
 ﻿using MilkUp.Data;
 using MilkUp.Models;
 using MilkUp.Repositories.Interfaces;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MilkUp.Repositories
 {
@@ -10,6 +12,7 @@ namespace MilkUp.Repositories
         {
         }
 
-        //todo custom queries can be saved as methods  
+        public async virtual Task<IQueryable<Lactation>> GetCowLactations(int cowID) 
+            => await base.GetQuery(x => x.CowID == cowID);
     }
 }

@@ -1,0 +1,4 @@
+﻿1. Soft delete 
+	- na SQL`u nie pilnujemy unikalności pól (oprócz Id) np. jeśli User.Email ma być unikalny to tylko w obrębie nieusuniętych, po usunięciu można dodać nowego usera z takim email
+	- 
+

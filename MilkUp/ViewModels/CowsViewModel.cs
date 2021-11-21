@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
+using MilkUp.Data;
 using MilkUp.Models;
-using MilkUp.Repositories;
-using MilkUp.ViewModels.Interfaces;
+using MilkUp.Repositories.Interfaces;
+using MilkUp.Services;
 using MilkUp.ViewModels.Cows;
+using MilkUp.ViewModels.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MilkUp.Repositories.Interfaces;
-using MilkUp.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace MilkUp.ViewModels
 {
@@ -19,19 +18,25 @@ namespace MilkUp.ViewModels
         readonly ICowRepository _cowRepository;
         readonly ILactationRepository _lactationRepository;
         readonly ApplicationDbContext _dbContext;
+        readonly ApplicationStateService _applicationStateService;    
+        readonly CowDeleteService _cowDeleteService;
 
         public CowsViewModel(ICowRepository cowRepository,
                              ILactationRepository lactationRepository,
                              ApplicationDbContext applicationDbContext,
                              UserManager<ApplicationUser> userManager,
-                             AuthenticationStateProvider authenticationStateProvider) 
-            : base(authenticationStateProvider, 
-                  applicationDbContext, 
+                             AuthenticationStateProvider authenticationStateProvider,
+                             CowDeleteService cowDeleteService, 
+                             ApplicationStateService applicationStateService)
+            : base(authenticationStateProvider,
+                  applicationDbContext,
                   userManager)
-        {            
+        {
             _cowRepository = cowRepository;
             _lactationRepository = lactationRepository;
             InitializeViewModel().GetAwaiter().GetResult();
+            _cowDeleteService = cowDeleteService;
+            _applicationStateService = applicationStateService;
         }
 
         public async Task InitializeViewModel()
@@ -72,6 +77,13 @@ namespace MilkUp.ViewModels
                 LactationCount = selectedCow.Lactations.Any() ? selectedCow.Lactations.Count() : 0,
                 NameOnFarm = selectedCow.NameOnFarm
             };
+        }
+
+        public async Task DeleteCow(int cowID)
+        {
+            _applicationStateService.AddNotification(await _cowDeleteService.Delete(cowID)); 
+            
+            InitializeViewModel(); 
         }
     }
 }

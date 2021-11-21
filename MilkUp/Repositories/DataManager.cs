@@ -50,6 +50,13 @@ namespace MilkUp.Repositories
             await Update(entityToDelete);
         }
 
+        public async virtual Task DeleteRange(int id)
+        {
+            var entityToDelete = await _dbSet.FindAsync(id);
+            entityToDelete.DateDeleted = DateTime.UtcNow;
+            await Update(entityToDelete);
+        }
+
         public async virtual Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, 
                                                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
                                                string includeProperties = "")
