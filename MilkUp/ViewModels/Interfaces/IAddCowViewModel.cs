@@ -8,7 +8,7 @@ namespace MilkUp.ViewModels.Interfaces
     public interface IAddCowViewModel
     {
         bool IsFarmBorn { get; set; }
-        int? NameOnFarm { get; set; }
+        string NameOnFarm { get; set; }
         string FarmID { get; set; }
         string CowGroupID { get; set; }
         int? EarringNumber { get; set; }

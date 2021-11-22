@@ -6,7 +6,7 @@ namespace MilkUp.Models
 {
     public class Cow : EntityBase, ICompany
     {        
-        public int NameOnFarm { get; set; }//ID used on farm
+        public string NameOnFarm { get; set; }//ID used on farm, can have zeros e.g. 00123
         public int EarringNumber { get; set; }//Reg1 – to numer kolczyka nadawany jest zaraz po urodzeniu (Ryc. 3).
         public string TransponderNumber { get; set; }
         //public int AllProID { get; set; }//numer transpondera który pozwala programowi AllPro na identyfikację zwierzęcia oraz zapisanie danych dotyczących doju

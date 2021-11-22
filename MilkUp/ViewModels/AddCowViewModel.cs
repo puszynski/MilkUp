@@ -26,7 +26,7 @@ namespace MilkUp.ViewModels
                                ApplicationStateService applicationStateService,
                                AuthenticationStateProvider authenticationStateProvider,
                                ApplicationDbContext applicationDbContext,
-                               UserManager<ApplicationUser> userManager) 
+                               UserManager<ApplicationUser> userManager)
             : base(authenticationStateProvider,
                    applicationDbContext,
                    userManager)
@@ -138,6 +138,7 @@ namespace MilkUp.ViewModels
             }
 
             _applicationStateService.AddNotification("Dodano nową krowe", Enums.ENotificationType.Success);
+            //todo trzeba wyczyścić dane bo po ponownym wejściu są te same dane w formularzu
             _navigationManager.NavigateTo("/cows");
         }
     }
