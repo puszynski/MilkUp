@@ -16,28 +16,23 @@
 
 <li class="nav-item px-1">
     <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-        <i class="bi bi-eye-fill"></i> Główna
+        <i class="bi bi-eye-fill"></i> Brudnopis
     </NavLink>
 </li>
-<li class="nav-item px-1">
-    <NavLink class="nav-link" href="cows">
+
+<li class="nav-item dropdown px-1">
+    <NavLink class="nav-link dropdown-toggle" href="cows" data-bs-toggle="dropdown" aria-expanded="false">
         <i class="bi bi-stack"></i> Krowy
     </NavLink>
-</li>
-<li class="nav-item">    
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"> <i class="bi bi-key-fill"></i> Disabled</a>
-</li>
-<li class="nav-item dropdown">    
-    <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-bs-toggle="dropdown" aria-expanded="false"> <i class="bi bi-puzzle-fill"></i> Dropdown</a>
     <ul class="dropdown-menu" aria-labelledby="dropdown09">
         <li>
-            <NavLink class="dropdown-item" href="counter">
-                Test1
+            <NavLink class="dropdown-item" href="cows">
+                Lista
             </NavLink>
         </li>
         <li>
-            <NavLink class="dropdown-item" href="fetchdata">
-                Test2
+            <NavLink class="dropdown-item" href="addcow">
+                Dodaj krowe
             </NavLink>
         </li>
     </ul>

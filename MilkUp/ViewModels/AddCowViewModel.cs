@@ -57,7 +57,7 @@ namespace MilkUp.ViewModels
         public bool IsFarmBorn { get; set; } = true;
 
         [Required(ErrorMessage = "Pole wymagane")]
-        public int? NameOnFarm { get; set; }
+        public string NameOnFarm { get; set; }
 
         [Required(ErrorMessage = "Pole wymagane")]
         public string FarmID { get; set; }//todo farm name to display/filter
@@ -101,7 +101,7 @@ namespace MilkUp.ViewModels
 
             var cow = new Cow()
             {
-                NameOnFarm = NameOnFarm.Value,
+                NameOnFarm = NameOnFarm,
                 EarringNumber = EarringNumber.Value,
                 TransponderNumber = TransponderNumber,
                 BirthDate = BirthDate.Value,

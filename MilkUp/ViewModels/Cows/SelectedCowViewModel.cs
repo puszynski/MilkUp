@@ -3,7 +3,7 @@
     public class SelectedCowViewModel
     {
         public int ID { get; set; }
-        public int NameOnFarm { get; set; }
+        public string NameOnFarm { get; set; }
         public string FarmName { get; set; }
         public int? ParentID { get; set; }
         public int LactationCount { get; set; }

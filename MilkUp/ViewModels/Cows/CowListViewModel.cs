@@ -3,7 +3,7 @@
     public class CowListViewModel
     {
         public int ID { get; set; }//use by DB
-        public int NameOnFarm { get; set; }//ID used on farm
+        public string NameOnFarm { get; set; }//ID used on farm
         public int FarmID { get; set; }
         public string FarmName { get; set; }
         public int? ParentID { get; set; }
