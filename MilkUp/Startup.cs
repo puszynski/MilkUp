@@ -69,7 +69,7 @@ namespace MilkUp
             services.AddScoped<IFarmRepository, FarmRepository>();
 
             services.AddScoped<ApplicationStateService>();
-            services.AddSingleton<CowDeleteService>();
+            services.AddScoped<CowDeleteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline/ add middleweare - stuff between requests.
